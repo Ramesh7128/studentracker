@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="628023285">
+    <data-source source="LOCAL" name="Django default" uuid="a379a841-dcf4-443d-b0a6-95753e430e2f">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/studentracker/../database.db</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

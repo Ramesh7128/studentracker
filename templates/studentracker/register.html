@@ -1,0 +1,27 @@
+{% extends 'studentracker/base.html' %}
+{% load static %}
+
+{% block body_block %}
+    <div class="hero-unit">
+        <h1>Register</h1>
+
+        {% if registered %}
+        Officespace says: <strong>thank you for registering!</strong>
+        <a href="/">Return to the homepage.</a><br />
+        {% else %}
+        <strong>register here!</strong><br/>
+        <div class="container">
+        <form class id="user_form" method="post" action="/user/register/"
+                enctype="multipart/form-data">
+
+            {% csrf_token %}
+            {{ user_form.as_p }}
+
+            <input class="btn btn-primary" type="submit" name="submit" value="Register" />
+        </form>
+        </div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

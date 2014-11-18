@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html xmlns="http://www.w3.org/1999/html">
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+        <link rel="stylesheet"
+              href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">
+        <link rel="stylesheet"
+              href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js">
+        </script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.js">
+        </script>
+        {{ form.media }}
+{# end of django datepicker#}
+    </head>
+
+    <body>
+        <div class="container">
+        <nav role="navigation" class="navbar navbar-inverse">
+            <div class="navbar-header">
+                <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand">{% block content %}Project Name{% endblock %}</a>
+            </div>
+
+            <div id="navbarCollapse" class="collapse navbar-collapse">
+
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                        <li><a href="#"> {{user.username|upper}}</a></li>
+                        <li><a href="/user/logout/">logout</a></li>
+                    {% else %}
+                        <li><a href="/user/register/">Register</a></li>
+                        <li><a href="/user/login/">login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        </div>
+        {% block body_block %}This is {{ user.username }}{% endblock %}
+    </body>
+</html>

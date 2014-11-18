@@ -1,0 +1,21 @@
+{% extends 'studentracker/base.html' %}
+{% load static %}
+{% block body_block %}
+    <div class="hero-unit">
+        <h2>Login</h2>
+
+        <div class="container">
+        <form class="form-horizontal" id="login_form" method="post" action="/user/login/">
+            {% csrf_token %}
+            <div class="col-xs-6">
+            <input type="text" name="username" placeholder="Username:" value="" size="50" />
+            <br><br>
+            <input type="password" name="password" placeholder="Password:" value="" size="50" />
+            </div>
+            <div class="col-xs-offset-2 col-xs-10">
+            <br><input class="btn btn-primary" type="submit" value="submit" />
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
