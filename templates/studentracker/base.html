@@ -28,14 +28,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">{% block content %}Project Name{% endblock %}</a>
+                <a href="/" class="navbar-brand">{% block content %}Student-tracker{% endblock %}</a>
             </div>
 
             <div id="navbarCollapse" class="collapse navbar-collapse">
-
+                <ul class="nav navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li><a href="/addlinks/">Add links</a></li>
+                    {% endif %}
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
-                        <li><a href="#"> {{user.username|upper}}</a></li>
+                        <li><a href="/userprofile/{{ user.username }}"> {{user.username|upper}}</a></li>
                         <li><a href="/user/logout/">logout</a></li>
                     {% else %}
                         <li><a href="/user/register/">Register</a></li>
