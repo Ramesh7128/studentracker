@@ -1,13 +1,20 @@
 {% extends 'studentracker/base.html' %}
 {% load static %}
 {% block body_block %}
-    <div>{{ userprof.id }}</div>
-    <div>{{ userprof.users.username }}</div>
-    <div>{{ userprof.github }}</div>
-    <div>{{ userprof.codecademy }}</div><br><br>
+{#    <div>{{ userprof.id }}</div>#}
+{#    <div>{{ userprof.users.username }}</div>#}
+{#    <div>{{ userprof.github }}</div>#}
+{#    <div>{{ userprof.codecademy }}</div><br><br>#}
     <div><b>Github-Repo names</b></div><br>
     <div>{% for key in data %}
-            {{ forloop.counter }} Name :{{ key}}<br>
+            {{ forloop.counter }}
+            <b>{{key.name}}</b><br>
+            {% for k,v in key.items %}
+                {% ifnotequal k "name" %}
+                {{ k }} : {{ v }}<br>
+                {% endifnotequal %}
+            {% endfor %}
+            <br>
          {% endfor %}
     </div><br>
     <div><b>Total points :</b>{{ points }}</div>

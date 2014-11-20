@@ -44,25 +44,40 @@ def addlinks(request):
 def userprofile(request, userprofname):
     context = RequestContext(request)
     context_dict = {}
-    dict = []
+    dicts = []
+    lang = []
+    hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+       'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+       'Accept-Encoding': 'none',
+       'Accept-Language': 'en-US,en;q=0.8',
+       'Connection': 'keep-alive'}
 
     ########### Git hub ##########
     users = User.objects.get(username=request.user)
     user_url = profile.objects.get(users=users)
     user_url = str(user_url.github)
     list_url = user_url.split('/')
-    url = "https://api.github.com/users/"+list_url[-1]+"/repos"
-    repos = urllib2.urlopen(url)
+    url = "https://api.github.com/users/"+list_url[-1]+"/repos?client_id=30e9b9ede28e81a28760&client_secret=26308f9622371b86cb0a6f3f55468d4b9ab3e49d"
+    req = urllib2.Request(url, headers=hdr)
+    repos = urllib2.urlopen(req)
     data = json.load(repos)
     for li in data:
         if li['fork']==False:
-            dict.append(li['name'])
-    points = len(dict)
+            b = {'name':li['name']}
+# url to get the languages used in the repo
+            url_lang="https://api.github.com/repos/"+list_url[-1]+"/"+li['name']+"/languages?client_id=30e9b9ede28e81a28760&client_secret=26308f9622371b86cb0a6f3f55468d4b9ab3e49d"
+            req = urllib2.Request(url_lang,headers=hdr)
+            languages = urllib2.urlopen(req)
+            datalang = json.load(languages)
+            c = dict(b.items()+ datalang.items())
+            dicts.append(c)
+    points = len(dicts)
     userprof = profile.objects.get(users=request.user)
     context_dict['userprof'] = userprof
-    context_dict['data'] = dict
+    context_dict['data'] = dicts
     context_dict['points'] = points
-    ######## end of githb ##########
+    ######## end of github ##########
 
 
     return render_to_response('studentracker/userprofile.html', context_dict, context)
