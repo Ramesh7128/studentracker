@@ -5,17 +5,32 @@
 {#    <div>{{ userprof.users.username }}</div>#}
 {#    <div>{{ userprof.github }}</div>#}
 {#    <div>{{ userprof.codecademy }}</div><br><br>#}
-    <div><b>Github-Repo names</b></div><br>
-    <div>{% for key in data %}
+    <div class="container">
+        <div class="row">
+        <div id="chart_div" style="width: 500px; height: 500px;"></div>
+        <div class="col-md-4">
+        <div><b>Github-Repo names</b></div><br>
+        <div>{% for key in data %}
+                {{ forloop.counter }}
+                <b>{{key.name}}</b><br>
+                {% for k,v in key.items %}
+                    {% ifnotequal k "name" %}
+                    {{ k }} : {{ v }}<br>
+                    {% endifnotequal %}
+                {% endfor %}
+                <br>
+             {% endfor %}
+        </div><br>
+        <div><b>Total points for github:</b>{{ points_github }}</div><br>
+        </div>
+        <div class="col-md-4">
+        <div><b>codecademy-courses completed</b></div><br>
+        <div>{% for link in links %}
             {{ forloop.counter }}
-            <b>{{key.name}}</b><br>
-            {% for k,v in key.items %}
-                {% ifnotequal k "name" %}
-                {{ k }} : {{ v }}<br>
-                {% endifnotequal %}
-            {% endfor %}
-            <br>
-         {% endfor %}
-    </div><br>
-    <div><b>Total points :</b>{{ points }}</div>
+            {{ link }}<br>
+            {% endfor %}<br>
+        <div><b>Total points for Codecademy: </b>{{ points_codecademy }}</div>
+        </div>
+        </div>
+    </div>
 {% endblock %}
