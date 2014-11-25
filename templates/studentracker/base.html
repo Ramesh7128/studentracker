@@ -14,17 +14,17 @@
         </script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.js">
         </script>
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script type="text/javascript">
-              google.load("visualization", "1", {packages:["treemap"]});
-              google.setOnLoadCallback(drawChart);
-              function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                  ['Location','Parent','Market trade volume (size)','Market increase/decrease (color)'],
-                  ['Global',null,0,0],
-                  ['Github','Global',{{ points_github }},10],
-                  ['codecademy','Global',{{ points_codecademy }},20],
-                  ['Teamtreehouse','Global',3,5],
+{#        <script type="text/javascript" src="https://www.google.com/jsapi"></script>#}
+{#        <script type="text/javascript">#}
+{#              google.load("visualization", "1", {packages:["treemap"]});#}
+{#              google.setOnLoadCallback(drawChart);#}
+{#              function drawChart() {#}
+{#                var data = google.visualization.arrayToDataTable([#}
+{#                  ['Location','Parent','Market trade volume (size)','Market increase/decrease (color)'],#}
+{#                  ['Global',null,0,0],#}
+{#                  ['Github','Global',{{ points_github }},10],#}
+{#                  ['codecademy','Global',{{ points_codecademy }},20],#}
+{#                  ['Teamtreehouse','Global',3,5],#}
 {#                  ['America',   'Global',             0,                               0],#}
 {#                  ['Europe',    'Global',             0,                               0],#}
 {#                  ['Asia',      'Global',             0,                               0],#}
@@ -52,20 +52,69 @@
 {#                  ['Sudan',     'Africa',             12,                              2],#}
 {#                  ['Congo',     'Africa',             10,                              12],#}
 {#                  ['Zaire',     'Africa',             8,                               10]#}
-                ]);
+{#                ]);#}
+{##}
+{#                tree = new google.visualization.TreeMap(document.getElementById('chart_div'));#}
+{##}
+{#                tree.draw(data, {#}
+{#                  minColor: '#f00',#}
+{#                  midColor: '#ddd',#}
+{#                  maxColor: '#0d0',#}
+{#                  headerHeight: 15,#}
+{#                  fontColor: 'black',#}
+{#                  showScale: true#}
+{#                });#}
+{##}
+{#              }#}
+{#        </script>#}
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="http://ep09.pld-linux.org/~mmazur/DrasticTreemapGApi/DrasticTreemapGApi.js"></script>
+        <script type="text/javascript">
+            google.load("visualization", "1");
+            google.load("swfobject", "2.2");
 
-                tree = new google.visualization.TreeMap(document.getElementById('chart_div'));
+            // Set callback to run when API is loaded
+            google.setOnLoadCallback(drawVisualization);
 
-                tree.draw(data, {
-                  minColor: '#f00',
-                  midColor: '#ddd',
-                  maxColor: '#0d0',
-                  headerHeight: 15,
-                  fontColor: 'black',
-                  showScale: true
-                });
+            // Called when the Visualization API is loaded.
+            function drawVisualization() {
 
-              }
+            // Create and populate a data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Product');
+            data.addColumn('string', 'Type');
+            data.addColumn('number', 'East');
+            data.addColumn('number', 'West');
+            data.addColumn('number', 'South');
+            data.addRows([
+              ['Green beans', 'Vegetables', 100, 100, 400],
+              ['Avocado', 'Vegetables', 50, 400, 300],
+              ['Tomatos', 'Vegetables', 200, 400, 500],
+              ['Cucumbers', 'Vegetables', 500, 1000, 700],
+              ['Apples', 'Fruit', 1700, 2300, 2000],
+              ['Bananas', 'Fruit', 800, 700, 600],
+              ['Oranges', 'Fruit', 200, 300, 100],
+              ['Pineapples', 'Fruit', 100, 150, 500],
+              ['Broccoli', 'Vegetables', 800, 1000, 900],
+              ['Wholemeal', 'Bread', 250, 100, 300],
+              ['Bagels', 'Bread', 120, 300, 200],
+              ['Baguette', 'Bread', 50, 300, 200],
+              ['Ciabatta', 'Bread', 200, 300, 400],
+              ['Croissants', 'Bread', 400, 600, 200],
+              ['white bread', 'Bread', 500, 200, 300]
+            ]);
+
+            // Instantiate our object.
+            var vis = new drasticdata.DrasticTreemap(document.getElementById('thediv'));
+
+            // Draw the treemap with the data we created locally and some options:
+            vis.draw(data, {
+                groupbycol: "Type",
+                labelcol: "Product",
+                variables: ['East', 'West', 'South']
+                }
+            );
+           }
         </script>
         {{ form.media }}
 {# end of django datepicker#}
