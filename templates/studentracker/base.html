@@ -14,108 +14,131 @@
         </script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.js">
         </script>
-{#        <script type="text/javascript" src="https://www.google.com/jsapi"></script>#}
-{#        <script type="text/javascript">#}
-{#              google.load("visualization", "1", {packages:["treemap"]});#}
-{#              google.setOnLoadCallback(drawChart);#}
-{#              function drawChart() {#}
-{#                var data = google.visualization.arrayToDataTable([#}
-{#                  ['Location','Parent','Market trade volume (size)','Market increase/decrease (color)'],#}
-{#                  ['Global',null,0,0],#}
-{#                  ['Github','Global',{{ points_github }},10],#}
-{#                  ['codecademy','Global',{{ points_codecademy }},20],#}
-{#                  ['Teamtreehouse','Global',3,5],#}
-{#                  ['America',   'Global',             0,                               0],#}
-{#                  ['Europe',    'Global',             0,                               0],#}
-{#                  ['Asia',      'Global',             0,                               0],#}
-{#                  ['Australia', 'Global',             0,                               0],#}
-{#                  ['Africa',    'Global',             0,                               0],#}
-{#                  ['Brazil',    'Global',            11,                              10],#}
-{#                  ['USA',       'America',            52,                              31],#}
-{#                  ['Mexico',    'America',            24,                              12],#}
-{#                  ['Canada',    'America',            16,                              -23],#}
-{#                  ['France',    'Europe',             42,                              -11],#}
-{#                  ['Germany',   'Europe',             31,                              -2],#}
-{#                  ['Sweden',    'Europe',             22,                              -13],#}
-{#                  ['Italy',     'Europe',             17,                              4],#}
-{#                  ['UK',        'Europe',             21,                              -5],#}
-{#                  ['China',     'Asia',               36,                              4],#}
-{#                  ['Japan',     'Asia',               20,                              -12],#}
-{#                  ['India',     'Asia',               40,                              63],#}
-{#                  ['Laos',      'Asia',               4,                               34],#}
-{#                  ['Mongolia',  'Asia',               1,                               -5],#}
-{#                  ['Israel',    'Asia',               12,                              24],#}
-{#                  ['Iran',      'Asia',               18,                              13],#}
-{#                  ['Pakistan',  'Asia',               11,                              -52],#}
-{#                  ['Egypt',     'Africa',             21,                              0],#}
-{#                  ['S. Africa', 'Africa',             30,                              43],#}
-{#                  ['Sudan',     'Africa',             12,                              2],#}
-{#                  ['Congo',     'Africa',             10,                              12],#}
-{#                  ['Zaire',     'Africa',             8,                               10]#}
-{#                ]);#}
-{##}
-{#                tree = new google.visualization.TreeMap(document.getElementById('chart_div'));#}
-{##}
-{#                tree.draw(data, {#}
-{#                  minColor: '#f00',#}
-{#                  midColor: '#ddd',#}
-{#                  maxColor: '#0d0',#}
-{#                  headerHeight: 15,#}
-{#                  fontColor: 'black',#}
-{#                  showScale: true#}
-{#                });#}
-{##}
-{#              }#}
-{#        </script>#}
-        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-        <script type="text/javascript" src="http://ep09.pld-linux.org/~mmazur/DrasticTreemapGApi/DrasticTreemapGApi.js"></script>
-        <script type="text/javascript">
-            google.load("visualization", "1");
-            google.load("swfobject", "2.2");
+        <script src="{% static 'jqwidgets-ver3.6.0/scripts/jquery-1.11.1.min.js' %}"></script>
+        <script src="{% static 'jqwidgets-ver3.6.0/jqwidgets/jqxcore.js' %}"></script>
+        <script src="{% static 'jqwidgets-ver3.6.0/jqwidgets/jqxtooltip.js' %}"></script>
+        <script src="{% static 'jqwidgets-ver3.6.0/jqwidgets/jqxtreemap.js' %}"></script>
+        <script type="text/javascript" src="{% static 'jqwidgets-ver3.6.0/scripts/demos.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'jqwidgets-ver3.6.0/jqwidgets/styles/jqx.base.css' %}"/>
+        <script>
+        $(function () {
+            var data = [
+            {
+                label: 'Github',
+                value: null,
+                color: null
+            },
+            {
+                label: 'Codecademy',
+                value: null,
+                color: null
+            },
+            {
+                label: 'TeamTreehouse',
+                value: null,
+                color: null
+            },
 
-            // Set callback to run when API is loaded
-            google.setOnLoadCallback(drawVisualization);
+            {
+                label: 'Python',
+                value: 4,
+                color: '#FF0000',
+                parent: 'Codecademy',
+                data: { description: "As students at the Navy's elite fighter weapons school compete to be best in the class, one daring young flyer learns a few things from a civilian instructor that are not taught in the classroom.", title: "Top Gun (1986)" }
+            },
+            {
+                label: 'Python',
+                color: '#FF0000',
+                value: 4.5,
+                parent: 'Github',
+                data: { description: "A Naval veteran arrives home from war unsettled and uncertain of his future - until he is tantalized by The Cause and its charismatic leader.", title: "The Master (2012)" }
+            },
+            {
+                label: 'Javascript',
+                color: '#FFFF00',
+                value: 6.8,
+                parent: 'Codecademy',
+                data: { description: "A dramatization of the 1980 joint CIA-Canadian secret operation to extract six fugitive American diplomatic personnel out of revolutionary Iran.", title: "Argo (2012)" }
+            },
+            {
+                label: 'Css',
+                color: '#00FFFF',
+                value: 8.8,
+                parent: 'Codecademy',
+                data: { description: "An insomniac office worker looking for a way to change his life crosses paths with a devil-may-care soap maker and they form an underground fight club that evolves into something much, much more.", title: "Fight Club (1999)" }
+            },
 
-            // Called when the Visualization API is loaded.
-            function drawVisualization() {
+            {
+                label: 'Python',
+                color: '#FF0000',
+                value: 8.9,
+                parent: 'TeamTreehouse',
+                data: { description: "When Batman, Gordon and Harvey Dent launch an assault on the mob, they let the clown out of the box, the Joker, bent on turning Gotham on itself and bringing any heroes down to his level.", title: "The Dark Knight (2008)" }
+            },
+            {
+                label: 'Javascript',
+                color: '#FFFF00',
+                value: 6.0,
+                parent: 'TeamTreehouse',
+                data: { description: "The lives of two mob hit men, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.", title: "Pulp Fiction (1994)" }
+            },
 
-            // Create and populate a data table.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Product');
-            data.addColumn('string', 'Type');
-            data.addColumn('number', 'East');
-            data.addColumn('number', 'West');
-            data.addColumn('number', 'South');
-            data.addRows([
-              ['Green beans', 'Vegetables', 100, 100, 400],
-              ['Avocado', 'Vegetables', 50, 400, 300],
-              ['Tomatos', 'Vegetables', 200, 400, 500],
-              ['Cucumbers', 'Vegetables', 500, 1000, 700],
-              ['Apples', 'Fruit', 1700, 2300, 2000],
-              ['Bananas', 'Fruit', 800, 700, 600],
-              ['Oranges', 'Fruit', 200, 300, 100],
-              ['Pineapples', 'Fruit', 100, 150, 500],
-              ['Broccoli', 'Vegetables', 800, 1000, 900],
-              ['Wholemeal', 'Bread', 250, 100, 300],
-              ['Bagels', 'Bread', 120, 300, 200],
-              ['Baguette', 'Bread', 50, 300, 200],
-              ['Ciabatta', 'Bread', 200, 300, 400],
-              ['Croissants', 'Bread', 400, 600, 200],
-              ['white bread', 'Bread', 500, 200, 300]
-            ]);
 
-            // Instantiate our object.
-            var vis = new drasticdata.DrasticTreemap(document.getElementById('thediv'));
+            {
+                label: 'Javascript',
+                color: '#FFFF00',
+                value: 10.8,
+                parent: 'Github',
+                data: { description: "Luke Skywalker, a spirited farm boy, joins rebel forces to save Princess Leia from the evil Darth Vader, and the galaxy from the Empire's planet-destroying Death Star..", title: "Star Wars: Episode IV - A New Hope (1977)" }
+            },
 
-            // Draw the treemap with the data we created locally and some options:
-            vis.draw(data, {
-                groupbycol: "Type",
-                labelcol: "Product",
-                variables: ['East', 'West', 'South']
+            {
+                label: 'Css',
+                color: '#00FFFF',
+                value: 4.3,
+                parent: 'Github',
+                data: { description: "Unscrupulous boxing promoters, violent bookmakers, a Russian gangster, incompetent amateur robbers, and supposedly Jewish jewelers fight to track down a priceless stolen diamond.", title: "Snatch (2000)" }
+            },
+
+
+            {
+                label: 'Css',
+                color: '#00FFFF',
+                value: 5.6,
+                parent: 'TeamTreehouse',
+                data: { description: "A thief with a unique code of professional ethics is double-crossed by his crew and left for dead. Assuming a new disguise and forming an unlikely alliance with a woman on the inside, he looks to hijack the score of the crew's latest heist.", title: "Parker (1994)" }
+            },
+
+
+            ];
+
+
+
+            $('#treemap').jqxTreeMap({
+                width: 600,
+                height: 600,
+                source: data,
+                colorRange: 50,
+                renderCallbacks: {
+                    '*': function (element, value) {
+                        if (value.data) {
+                            element.jqxTooltip({
+                                content: '<div><div style="font-weight: bold; max-width: 200px; font-family: verdana; font-size: 13px;">' + value.data.title + '</div><div style="width: 200px; font-family: verdana; font-size: 12px;">' + value.data.description + '</div></div>',
+                                position: 'mouse',
+                                autoHideDelay: 6000,
+                                theme: theme
+                            });
+                        } else if (value.data === undefined) {
+                            element.css({
+                                backgroundColor: '#fff',
+                                border: '6px solid #000'
+                            });
+                        }
+                    }
                 }
-            );
-           }
-        </script>
+            });
+        });
+</script>
         {{ form.media }}
 {# end of django datepicker#}
     </head>
