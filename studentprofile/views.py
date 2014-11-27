@@ -14,10 +14,12 @@ from studentprofile.models import profile
 from bs4 import BeautifulSoup
 import random
 
+
 def index(request):
     context = RequestContext(request)
     context_dict = {}
     return render_to_response('studentracker/base.html', context_dict, context)
+
 
 def addlinks(request):
     context = RequestContext(request)
@@ -43,7 +45,7 @@ def addlinks(request):
 
     return render_to_response('studentracker/addlinks.html', context_dict, context)
 
-def github(context_dict, request):
+def github(context_dict, request, jsonstacklist):
 
     hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -54,6 +56,8 @@ def github(context_dict, request):
 
     dicts = []
     lang = []
+    github_lang = []
+    github_stackpoints = {}
 
     users = User.objects.get(username=request.user)
     user_url = profile.objects.get(users=users)
@@ -73,17 +77,102 @@ def github(context_dict, request):
             req = urllib2.Request(url_lang,headers=hdr)
             languages = urllib2.urlopen(req)
             datalang = json.load(languages)
-            c = dict(b.items()+ datalang.items())
+
+            for key, value in datalang.items():
+                if key not in github_lang:
+                    github_lang.append(str(key))
+            github_stackpoints = dict.fromkeys(github_lang,0)
+
+            ############## for treemap json ############
+            # for key, value in datalang.items():
+            #     jsonstacklist.append({
+            #         "label": key,
+            #         "value": value,
+            #         "color": '#FF0000',
+            #         "parent": 'Github',
+            #         "data": { "description": value, "title": key }
+            #     }
+            #     )
+
+            c = dict(b.items()+ datalang.items()) #to join two dict
             dicts.append(c)
+    for dic in dicts:
+        for lis, mis in dic.items():
+            lis = str(lis)
+            if lis in github_stackpoints.keys():
+                github_stackpoints[lis] += mis
+
+    ####### treemap-json for github ###########
+    for key, value in github_stackpoints.items():
+                jsonstacklist.append({
+                    "label": key,
+                    "value": value,
+                    "color": '#FF0000',
+                    "parent": 'Github',
+                    "data": { "description": value, "title": key }
+                }
+                )
+    ############################################
+
     points_github = len(dicts)
     userprof = profile.objects.get(users=request.user)
     context_dict['userprof'] = userprof
     context_dict['data'] = dicts
     context_dict['points_github'] = points_github
+    context_dict['github_stackpoints'] = github_stackpoints
 
-    return context_dict
+    return context_dict, jsonstacklist
 
-def codecademy(context_dict, request):
+
+def teamtreehouse(context_dict, request, jsonstacklist):
+
+    hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+       'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+       'Accept-Encoding': 'none',
+       'Accept-Language': 'en-US,en;q=0.8',
+       'Connection': 'keep-alive'}
+
+    dicts = []
+    points_teamtreehouse = 0
+
+    users = User.objects.get(username=request.user)
+    user_url = profile.objects.get(users=users)
+    user_git = str(user_url.teamtreehouse)
+    list_url = user_git.split('/')
+    url = "https://teamtreehouse.com/"+list_url[-1]
+    req = urllib2.Request(url, headers=hdr)
+    stackpoints = urllib2.urlopen(req)
+    soup = BeautifulSoup(stackpoints)
+
+    sourcehtmltag = soup.findAll('canvas',{ "class" : "chart featurette " })
+    data =  json.loads(sourcehtmltag[0].get('data-points'))
+    treehousepointsover0 = {}
+
+    for key, value in data.items():
+        if value > 0:
+            treehousepointsover0[key] = value
+            points_teamtreehouse = int(value) + points_teamtreehouse
+
+    for key, value in treehousepointsover0.items():
+        jsonstacklist.append({
+                    "label": str(key),
+                    "value": value,
+                    "color": '#FF0000',
+                    "parent": 'TeamTreehouse',
+                    "data": { "description": value, "title": str(key) }
+                }
+                )
+    userprof = profile.objects.get(users=request.user)
+    context_dict['userprof'] = userprof
+    context_dict['data_treehouse'] = treehousepointsover0
+    context_dict['points_teamtreehouse'] = points_teamtreehouse
+
+
+    return context_dict, jsonstacklist
+
+
+def codecademy(context_dict, request, jsonstacklist):
 
     codecademy = []
 
@@ -101,15 +190,41 @@ def codecademy(context_dict, request):
     points_codecademy = len(codecademy)
     context_dict['links'] = codecademy
     context_dict['points_codecademy'] = points_codecademy
-
-    return context_dict
+    for l in codecademy:
+        jsonstacklist.append({
+                    "label": str(l),
+                    "value": 25,
+                    "color": '#FF0000',
+                    "parent": 'Codecademy',
+                    "data": { "description": str(l), "title": 25 }
+                }
+                )
+    return context_dict, jsonstacklist
 
 def userprofile(request, userprofname):
     context = RequestContext(request)
     context_dict = {}
+    jsonstacklist = []
+    jsonstacklist.append({
+                "label": 'Github',
+                "value": "null",
+                "color": "null"
+            })
+    jsonstacklist.append({
+                "label": 'Codecademy',
+                "value": "null",
+                "color": "null"
+            })
+    jsonstacklist.append({
+                "label": 'TeamTreehouse',
+                "value": "null",
+                "color": "null"
+            })
 
-    context_dict = github(context_dict,request)
-    context_dict = codecademy(context_dict,request)
+    context_dict, jsonstacklist = github(context_dict,request, jsonstacklist)
+    context_dict, jsonstacklist = codecademy(context_dict,request, jsonstacklist)
+    context_dict, jsonstacklist = teamtreehouse(context_dict,request, jsonstacklist)
+    context_dict['jsonstacklist'] = jsonstacklist
 
     return render_to_response('studentracker/userprofile.html', context_dict, context)
 

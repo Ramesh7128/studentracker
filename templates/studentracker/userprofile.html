@@ -9,29 +9,45 @@
         <div class="row">
 {#        <div id="chart_div" style="width: 500px; height: 500px;"></div>#}
 {#        <div id="thediv" style="width:500px; height:500px;"></div>#}
-        <div id="treemap"></div>
-        <div class="col-md-4">
-        <div><b>Github-Repo names</b></div><br>
-        <div>{% for key in data %}
-                {{ forloop.counter }}
-                <b>{{key.name}}</b><br>
-                {% for k,v in key.items %}
-                    {% ifnotequal k "name" %}
-                    {{ k }} : {{ v }}<br>
-                    {% endifnotequal %}
-                {% endfor %}
+            <div id="treemap"></div><br>
+            <div class="col-md-4">
+                <div><b>Github-Repo names</b></div><br>
+                <div>{% for key in data %}
+                        {{ forloop.counter }}
+                        <b>{{key.name}}</b><br>
+                        {% for k,v in key.items %}
+                            {% ifnotequal k "name" %}
+                                {{ k }} : {{ v }}<br>
+                            {% endifnotequal %}
+                        {% endfor %}
+                        <br>
+                    {% endfor %}
+                </div><br>
+                <div><b>Total points for github:</b>{{ points_github }}</div><br>
+            </div>
+            <div class="col-md-4">
+                <div><b>codecademy-courses completed</b></div><br>
+                <div>{% for link in links %}
+                        {{ forloop.counter }}
+                        {{ link }}<br>
+                    {% endfor %}<br>
+                <div><b>Total points for Codecademy: </b>{{ points_codecademy }}</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div><b>Team Tree House</b></div><br>
+                <div>{% for key, value in data_treehouse.items %}
+                        {{ forloop.counter }}
+                        {{ key }} : {{ value }} -points<br>
+                {% endfor %}<br>
+                <div><b>Total points for teamtreehouse:</b>{{ points_teamtreehouse }} points</div>
+                </div>
                 <br>
-             {% endfor %}
-        </div><br>
-        <div><b>Total points for github:</b>{{ points_github }}</div><br>
-        </div>
-        <div class="col-md-4">
-        <div><b>codecademy-courses completed</b></div><br>
-        <div>{% for link in links %}
-            {{ forloop.counter }}
-            {{ link }}<br>
-            {% endfor %}<br>
-        <div><b>Total points for Codecademy: </b>{{ points_codecademy }}</div>
+                {{ github_stackpoints }}
+                {% for json in jsonstacklist %}
+                {{ json }}<br>
+                {% endfor %}
+            </div>
         </div>
         </div>
     </div>
