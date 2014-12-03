@@ -15,6 +15,9 @@ from bs4 import BeautifulSoup
 import random
 
 
+
+
+stackcolors = {"Python":"#FF0000", "JavaScript":"#00FF00", "Ruby":"#0000FF", "PHP":"#00FFFF", "CSS":"#99FF00"}
 def index(request):
     context = RequestContext(request)
     context_dict = {}
@@ -44,6 +47,31 @@ def addlinks(request):
     context_dict['forms'] = form
 
     return render_to_response('studentracker/addlinks.html', context_dict, context)
+
+
+def colorsfunction(colorvalue):
+    try:
+        color = stackcolors[colorvalue]
+    except:
+            color = "#000000"
+    return color
+
+def codewars(context_dict, request, jsonstacklist):
+
+    hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+       'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+       'Accept-Encoding': 'none',
+       'Accept-Language': 'en-US,en;q=0.8',
+       'Connection': 'keep-alive'}
+
+    users = User.objects.get(username=request.user)
+    user_url = profile.objects.get(users=users)
+    user_git = str(user_url.codewars)
+    list_url = user_git.split('/')
+
+
+
 
 def github(context_dict, request, jsonstacklist):
 
@@ -83,35 +111,42 @@ def github(context_dict, request, jsonstacklist):
                     github_lang.append(str(key))
             github_stackpoints = dict.fromkeys(github_lang,0)
 
-            ############## for treemap json ############
-            # for key, value in datalang.items():
-            #     jsonstacklist.append({
-            #         "label": key,
-            #         "value": value,
-            #         "color": '#FF0000',
-            #         "parent": 'Github',
-            #         "data": { "description": value, "title": key }
-            #     }
-            #     )
 
             c = dict(b.items()+ datalang.items()) #to join two dict
             dicts.append(c)
     for dic in dicts:
         for lis, mis in dic.items():
             lis = str(lis)
-            if lis in github_stackpoints.keys():
-                github_stackpoints[lis] += mis
+            # mis = int(mis)
+            if lis != "CSS":
+                if lis in github_stackpoints.keys():
+                    github_stackpoints[lis] += mis
+            elif lis == 'CSS' and mis > 500000:
+                if lis in github_stackpoints.keys():
+                    github_stackpoints[lis] += (mis-500000)
+            else:
+                if lis in github_stackpoints.keys():
+                    github_stackpoints[lis] += mis
+
+    ########## for changing the bytes github to points#######
+    for key, value in github_stackpoints.items():
+        github_stackpoints[key] = value/10000.0
+        ###########################
 
     ####### treemap-json for github ###########
     for key, value in github_stackpoints.items():
-                jsonstacklist.append({
-                    "label": key,
-                    "value": value,
-                    "color": '#FF0000',
-                    "parent": 'Github',
-                    "data": { "description": value, "title": key }
-                }
-                )
+            jsonlength = len(jsonstacklist) + 1
+            l = str(key.strip())
+            colors = colorsfunction(l)
+            jsonstacklist.append(
+            {
+                "id": str(jsonlength),
+                "text": key,
+                "parentid": "1",
+                "value": str(value),
+                "color": colors
+            }
+            )
     ############################################
 
     points_github = len(dicts)
@@ -155,12 +190,16 @@ def teamtreehouse(context_dict, request, jsonstacklist):
             points_teamtreehouse = int(value) + points_teamtreehouse
 
     for key, value in treehousepointsover0.items():
-        jsonstacklist.append({
-                    "label": str(key),
-                    "value": value,
-                    "color": '#FF0000',
-                    "parent": 'TeamTreehouse',
-                    "data": { "description": value, "title": str(key) }
+        jsonlength = len(jsonstacklist) + 1
+        l = str(key.strip())
+        colors = colorsfunction(l)
+        jsonstacklist.append(
+                {
+                    "id": str(jsonlength),
+                    "text": str(key),
+                    "parentid": "3",
+                    "value": str(value/100.0),
+                    "color": colors
                 }
                 )
     userprof = profile.objects.get(users=request.user)
@@ -184,6 +223,7 @@ def codecademy(context_dict, request, jsonstacklist):
     soup = BeautifulSoup(source)
 
     links = soup.findAll('h5',{ "class" : "text--ellipsis" })
+
     for link in links:
         codecademy.append(link.contents[0])
 
@@ -191,12 +231,16 @@ def codecademy(context_dict, request, jsonstacklist):
     context_dict['links'] = codecademy
     context_dict['points_codecademy'] = points_codecademy
     for l in codecademy:
+        jsonlength = len(jsonstacklist) + 1
+        l = str(l.strip())
+        colors = colorsfunction(l)
+
         jsonstacklist.append({
-                    "label": str(l),
-                    "value": 25,
-                    "color": '#FF0000',
-                    "parent": 'Codecademy',
-                    "data": { "description": str(l), "title": 25 }
+                    "id": str(jsonlength),
+                    "text": l,
+                    "parentid": "2",
+                    "value": "10",
+                    "color": colors
                 }
                 )
     return context_dict, jsonstacklist
@@ -206,24 +250,24 @@ def userprofile(request, userprofname):
     context_dict = {}
     jsonstacklist = []
     jsonstacklist.append({
-                "label": 'Github',
-                "value": "null",
-                "color": "null"
+                "id": "1",
+                "text": "Github",
+                "parentid": "-1"
+                })
+    jsonstacklist.append({
+                "id": "2",
+                "text": "Codecademy",
+                "parentid": "-1"
             })
     jsonstacklist.append({
-                "label": 'Codecademy',
-                "value": "null",
-                "color": "null"
+                "id": "3",
+                "text": "TeamTreeHouse",
+                "parentid": "-1"
             })
-    jsonstacklist.append({
-                "label": 'TeamTreehouse',
-                "value": "null",
-                "color": "null"
-            })
-
     context_dict, jsonstacklist = github(context_dict,request, jsonstacklist)
     context_dict, jsonstacklist = codecademy(context_dict,request, jsonstacklist)
     context_dict, jsonstacklist = teamtreehouse(context_dict,request, jsonstacklist)
+    jsonstacklist = json.dumps(jsonstacklist)
     context_dict['jsonstacklist'] = jsonstacklist
 
     return render_to_response('studentracker/userprofile.html', context_dict, context)

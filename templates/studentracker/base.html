@@ -16,129 +16,141 @@
         </script>
         <script src="{% static 'jqwidgets-ver3.6.0/scripts/jquery-1.11.1.min.js' %}"></script>
         <script src="{% static 'jqwidgets-ver3.6.0/jqwidgets/jqxcore.js' %}"></script>
-        <script src="{% static 'jqwidgets-ver3.6.0/jqwidgets/jqxtooltip.js' %}"></script>
+        <script src="{% static 'jqwidgets-ver3.6.0/jqwidgets/jqxdata.js' %}"></script>
         <script src="{% static 'jqwidgets-ver3.6.0/jqwidgets/jqxtreemap.js' %}"></script>
         <script type="text/javascript" src="{% static 'jqwidgets-ver3.6.0/scripts/demos.js' %}"></script>
         <link rel="stylesheet" href="{% static 'jqwidgets-ver3.6.0/jqwidgets/styles/jqx.base.css' %}"/>
-        <script>
-        $(function () {
-            var data = [
-            {
-                label: 'Github',
-                value: null,
-                color: null
-            },
-            {
-                label: 'Codecademy',
-                value: null,
-                color: null
-            },
-            {
-                label: 'TeamTreehouse',
-                value: null,
-                color: null
-            },
+        <script type="text/javascript">
+            $(document).ready(function () {
 
-            {
-                label: 'Python',
-                value: 4,
-                color: '#FF0000',
-                parent: 'Codecademy',
-                data: { description: "As students at the Navy's elite fighter weapons school compete to be best in the class, one daring young flyer learns a few things from a civilian instructor that are not taught in the classroom.", title: "Top Gun (1986)" }
-            },
-            {
-                label: 'Python',
-                color: '#FF0000',
-                value: 4.5,
-                parent: 'Github',
-                data: { description: "A Naval veteran arrives home from war unsettled and uncertain of his future - until he is tantalized by The Cause and its charismatic leader.", title: "The Master (2012)" }
-            },
-            {
-                label: 'Javascript',
-                color: '#FFFF00',
-                value: 6.8,
-                parent: 'Codecademy',
-                data: { description: "A dramatization of the 1980 joint CIA-Canadian secret operation to extract six fugitive American diplomatic personnel out of revolutionary Iran.", title: "Argo (2012)" }
-            },
-            {
-                label: 'Css',
-                color: '#00FFFF',
-                value: 8.8,
-                parent: 'Codecademy',
-                data: { description: "An insomniac office worker looking for a way to change his life crosses paths with a devil-may-care soap maker and they form an underground fight club that evolves into something much, much more.", title: "Fight Club (1999)" }
-            },
+                var data = {{ jsonstacklist|safe }};
+{#                  alert(data);#}
+{#                var data = [#}
+{#                {#}
+{#                    "id": "2",#}
+{#                    "parentid": "1",#}
+{#                    "text": "Hot Chocolate",#}
+{#                    "value": "$5.2",#}
+{#                    "color": "#90FF90",#}
+{#                }, {#}
+{#                    "id": "3",#}
+{#                    "parentid": "1",#}
+{#                    "text": "Peppermint Hot Chocolate",#}
+{#                    "value": "$4.0",#}
+{#                    "color": "#97F90"#}
+{#                }, {#}
+{#                    "id": "4",#}
+{#                    "parentid": "1",#}
+{#                    "text": "Salted Caramel Hot Chocolate",#}
+{#                    "value": "$2.4"#}
+{#                }, {#}
+{#                    "id": "5",#}
+{#                    "parentid": "1",#}
+{#                    "text": "White Hot Chocolate",#}
+{#                    "value": "$2.5"#}
+{#                }, {#}
+{#                    "text": "Chocolate Beverage",#}
+{#                    "id": "1",#}
+{#                    "parentid": "-1",#}
+{#                    "value": "$1.1"#}
+{#                }, {#}
+{#                    "id": "6",#}
+{#                    "text": "Espresso Beverage",#}
+{#                    "parentid": "-1",#}
+{#                    "value": "$0.9"#}
+{#                }, {#}
+{#                    "id": "7",#}
+{#                    "parentid": "6",#}
+{#                    "text": "Caffe Americano",#}
+{#                    "value": "$1.2"#}
+{#                }, {#}
+{#                    "id": "8",#}
+{#                    "text": "Caffe Latte",#}
+{#                    "parentid": "6",#}
+{#                    "value": "$3.3"#}
+{#                }, {#}
+{#                    "id": "9",#}
+{#                    "text": "Caffe Mocha",#}
+{#                    "parentid": "6",#}
+{#                    "value": "$2.5"#}
+{#                }, {#}
+{#                    "id": "10",#}
+{#                    "text": "Cappuccino",#}
+{#                    "parentid": "6",#}
+{#                    "value": "$1.5"#}
+{#                }, {#}
+{#                    "id": "11",#}
+{#                    "text": "Pumpkin Spice Latte",#}
+{#                    "parentid": "6",#}
+{#                    "value": "$1.6"#}
+{#                }, {#}
+{#                    "id": "12",#}
+{#                    "text": "Frappuccino",#}
+{#                    "parentid": "-1"#}
+{#                }, {#}
+{#                    "id": "13",#}
+{#                    "text": "Caffe Vanilla Frappuccino",#}
+{#                    "parentid": "12",#}
+{#                    "value": "$1.2"#}
+{#                }];#}
+{##}
+{#                // prepare the data#}
+                var source =
+                {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'id' },
+                        { name: 'parentid' },
+                        { name: 'text' },
+                        { name: 'value' },
+                        { name: 'color'}
+                    ],
+                    id: 'id',
+                    localdata: data
+                };
 
-            {
-                label: 'Python',
-                color: '#FF0000',
-                value: 8.9,
-                parent: 'TeamTreehouse',
-                data: { description: "When Batman, Gordon and Harvey Dent launch an assault on the mob, they let the clown out of the box, the Joker, bent on turning Gotham on itself and bringing any heroes down to his level.", title: "The Dark Knight (2008)" }
-            },
-            {
-                label: 'Javascript',
-                color: '#FFFF00',
-                value: 6.0,
-                parent: 'TeamTreehouse',
-                data: { description: "The lives of two mob hit men, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.", title: "Pulp Fiction (1994)" }
-            },
+                // create data adapter.
+                var dataAdapter = new $.jqx.dataAdapter(source);
 
-
-            {
-                label: 'Javascript',
-                color: '#FFFF00',
-                value: 10.8,
-                parent: 'Github',
-                data: { description: "Luke Skywalker, a spirited farm boy, joins rebel forces to save Princess Leia from the evil Darth Vader, and the galaxy from the Empire's planet-destroying Death Star..", title: "Star Wars: Episode IV - A New Hope (1977)" }
-            },
-
-            {
-                label: 'Css',
-                color: '#00FFFF',
-                value: 4.3,
-                parent: 'Github',
-                data: { description: "Unscrupulous boxing promoters, violent bookmakers, a Russian gangster, incompetent amateur robbers, and supposedly Jewish jewelers fight to track down a priceless stolen diamond.", title: "Snatch (2000)" }
-            },
-
-
-            {
-                label: 'Css',
-                color: '#00FFFF',
-                value: 5.6,
-                parent: 'TeamTreehouse',
-                data: { description: "A thief with a unique code of professional ethics is double-crossed by his crew and left for dead. Assuming a new disguise and forming an unlikely alliance with a woman on the inside, he looks to hijack the score of the crew's latest heist.", title: "Parker (1994)" }
-            },
-
-
-            ];
-
-
-
-            $('#treemap').jqxTreeMap({
-                width: 600,
-                height: 600,
-                source: data,
-                colorRange: 50,
-                renderCallbacks: {
-                    '*': function (element, value) {
-                        if (value.data) {
-                            element.jqxTooltip({
-                                content: '<div><div style="font-weight: bold; max-width: 200px; font-family: verdana; font-size: 13px;">' + value.data.title + '</div><div style="width: 200px; font-family: verdana; font-size: 12px;">' + value.data.description + '</div></div>',
-                                position: 'mouse',
-                                autoHideDelay: 6000,
-                                theme: theme
-                            });
-                        } else if (value.data === undefined) {
-                            element.css({
-                                backgroundColor: '#fff',
-                                border: '6px solid #000'
-                            });
+                // perform Data Binding.
+                alert(dataAdapter);
+                dataAdapter.dataBind();
+                // get the treemap sectors. The first parameter is the item's id. The second parameter is the parent item's id. The 'items' parameter represents
+                // the sub items collection name. Each jqxTreeMap item has a 'label' property, but in the JSON data, we have a 'text' field. The last parameter
+                // specifies the mapping between the 'text' and 'label' fields.
+                var records = dataAdapter.getRecordsHierarchy('id', 'parentid', 'items', [{ name: 'text', map: 'label' }]);
+                alert(records);
+                $('#treemap').jqxTreeMap({
+                    width: 800,
+                    height: 800,
+                    source: records,
+                    colorRange: 50,
+                    renderCallbacks: {
+                        '*': function (element, data) {
+{#                            console.log(element);#}
+{#                            console.log(data);#}
+                            element.html('<span style="font-size: 18px;" class="jqx-treemap-label">' + data.label + '</span>');
+                			return true;
+                            if (!data.parent) {
+                                element.css({
+                                    backgroundColor: '#fff',
+                                    border: '3px solid #000'
+                                });
+                            }
+                            else {
+                                var nThreshold = 105;
+                                var bgDelta = (data.rgb.r * 0.299) + (data.rgb.g * 0.587) + (data.rgb.b * 0.114);
+                                var foreColor = (255 - bgDelta < nThreshold) ? 'Black' : 'White';
+                                element.css({
+                                    color: foreColor
+                                });
+                            }
                         }
                     }
-                }
+                });
             });
-        });
-</script>
+        </script>
+
         {{ form.media }}
 {# end of django datepicker#}
     </head>
