@@ -113,13 +113,11 @@
                 var dataAdapter = new $.jqx.dataAdapter(source);
 
                 // perform Data Binding.
-                alert(dataAdapter);
                 dataAdapter.dataBind();
                 // get the treemap sectors. The first parameter is the item's id. The second parameter is the parent item's id. The 'items' parameter represents
                 // the sub items collection name. Each jqxTreeMap item has a 'label' property, but in the JSON data, we have a 'text' field. The last parameter
                 // specifies the mapping between the 'text' and 'label' fields.
                 var records = dataAdapter.getRecordsHierarchy('id', 'parentid', 'items', [{ name: 'text', map: 'label' }]);
-                alert(records);
                 $('#treemap').jqxTreeMap({
                     width: 800,
                     height: 800,
