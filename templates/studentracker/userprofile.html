@@ -43,8 +43,12 @@
                 <div><b>Total points for teamtreehouse:</b>{{ points_teamtreehouse }} points</div>
                 </div>
                 <br>
-                {{ github_stackpoints }}
-                {{ jsonstacklist }}
+                <div>github : {{ githublist }}</div>
+                <div>Teamtreehouse: {{ treehouselist }}</div>
+                <div>Codecademy: {{ codecademylist }}</div>
+                <div>Codewars: {{ codewarslist }}</div>
+{#                {{ github_stackpoints }}#}
+{#                {{ jsonstacklist }}#}
 {#                {% for json in jsonstacklist %}#}
 {#                {{ json }}<br>#}
 {#                {% endfor %}#}

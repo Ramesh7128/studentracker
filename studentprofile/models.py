@@ -23,7 +23,37 @@ class stacklistmodel(models.Model):
     def __unicode__(self):
         return self.stack
 
+class Githubmodel(models.Model):
+    users = models.ForeignKey(User)
+    reponame = models.CharField(max_length=100)
+    stack = models.CharField(max_length=50)
+    bytes = models.IntegerField()
+
+    def __unicode__(self):
+        return self.reponame
+
+class CodeCademymodel(models.Model):
+    users = models.ForeignKey(User)
+    coursename = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.coursename
+
+class TeamTreeHousemodel(models.Model):
+    users = models.ForeignKey(User)
+    coursename = models.CharField(max_length=100)
+    points = models.IntegerField()
+
+    def __unicode__(self):
+        return self.coursename
 
 
+class Codewarsmodel(models.Model):
+    users = models.ForeignKey(User)
+    language = models.CharField(max_length=50)
+    honors = models.IntegerField()
+    rank = models.CharField(max_length=40)
+    completedchallenges = models.IntegerField()
 
-
+    def __unicode__(self):
+        return self.language

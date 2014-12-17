@@ -10,7 +10,7 @@ from datetime import datetime
 import urllib2
 import json
 from studentprofile.forms import profileform
-from studentprofile.models import profile, stacklistmodel
+from studentprofile.models import profile, stacklistmodel, Githubmodel, TeamTreeHousemodel, CodeCademymodel, Codewarsmodel
 from bs4 import BeautifulSoup
 import random
 
@@ -80,7 +80,10 @@ def codewars(context_dict, request, jsonstacklist):
     for key, value in data.items():
         if key == "ranks":
             dictlan = value['languages']
-
+        if key == "honor":
+            honor = int(value)
+        if key == "codeChallenges":
+            completed = int(value['totalCompleted'])
 
     for k, val in dictlan.items():
         jsonlength = len(jsonstacklist) + 1
@@ -96,6 +99,7 @@ def codewars(context_dict, request, jsonstacklist):
                 "color": colors
             }
             )
+        Codewarsmodel.objects.create(users=users, honors=honor, language=k, rank=dictlan[k]['name'],completedchallenges=completed)
         stacklistmodel.objects.create(users=users, stack=k,parentid=4,value=(int(dictlan[k]['score']))/10,colors=colors)
 
     userprof = profile.objects.get(users=request.user)
@@ -160,6 +164,14 @@ def github(context_dict, request, jsonstacklist):
                 if lis in github_stackpoints.keys():
                     github_stackpoints[lis] += mis
 
+    ###database entry###############
+    for d in dicts:
+      for i,j in d.items():
+          name = d['name']
+          if (i != "name"):
+            Githubmodel.objects.create(users=users, reponame=name, stack=i, bytes=int(j))
+    ######end of database entry######
+
     ########## for changing the bytes github to points#######
     for key, value in github_stackpoints.items():
         github_stackpoints[key] = value/10000.0
@@ -184,10 +196,10 @@ def github(context_dict, request, jsonstacklist):
 
     points_github = len(dicts)
     userprof = profile.objects.get(users=request.user)
-    context_dict['userprof'] = userprof
-    context_dict['data'] = dicts
-    context_dict['points_github'] = points_github
-    context_dict['github_stackpoints'] = github_stackpoints
+    # context_dict['userprof'] = userprof
+    # context_dict['data'] = dicts
+    # context_dict['points_github'] = points_github
+    # context_dict['github_stackpoints'] = github_stackpoints
 
     return context_dict, jsonstacklist
 
@@ -221,6 +233,8 @@ def teamtreehouse(context_dict, request, jsonstacklist):
         if value > 0:
             treehousepointsover0[key] = value
             points_teamtreehouse = int(value) + points_teamtreehouse
+            TeamTreeHousemodel.objects.create(users=users, coursename=key, points= int(value))
+
 
     for key, value in treehousepointsover0.items():
         jsonlength = len(jsonstacklist) + 1
@@ -237,9 +251,9 @@ def teamtreehouse(context_dict, request, jsonstacklist):
                 )
         stacklistmodel.objects.create(users=users, stack=str(key),parentid=3,value=(value/100.0),colors=colors)
     userprof = profile.objects.get(users=request.user)
-    context_dict['userprof'] = userprof
-    context_dict['data_treehouse'] = treehousepointsover0
-    context_dict['points_teamtreehouse'] = points_teamtreehouse
+    # context_dict['userprof'] = userprof
+    # context_dict['data_treehouse'] = treehousepointsover0
+    # context_dict['points_teamtreehouse'] = points_teamtreehouse
 
 
     return context_dict, jsonstacklist
@@ -262,11 +276,12 @@ def codecademy(context_dict, request, jsonstacklist):
         codecademy.append(link.contents[0])
 
     points_codecademy = len(codecademy)
-    context_dict['links'] = codecademy
-    context_dict['points_codecademy'] = points_codecademy
+    # context_dict['links'] = codecademy
+    # context_dict['points_codecademy'] = points_codecademy
     for l in codecademy:
         jsonlength = len(jsonstacklist) + 1
         l = str(l.strip())
+
         colors = colorsfunction(l)
 
         jsonstacklist.append({
@@ -277,6 +292,7 @@ def codecademy(context_dict, request, jsonstacklist):
                     "color": colors
                 }
                 )
+        CodeCademymodel.objects.create(users=users, coursename=l)
         stacklistmodel.objects.create(users=users, stack=l,parentid=2,value=10,colors=colors)
     return context_dict, jsonstacklist
 
@@ -319,6 +335,7 @@ def userprofile(request, userprofname):
                 "text": "Codewars",
                 "parentid": "-1"
             })
+
     # context_dict, jsonstacklist = github(context_dict,request, jsonstacklist)
     # context_dict, jsonstacklist = codecademy(context_dict,request, jsonstacklist)
     # context_dict, jsonstacklist = teamtreehouse(context_dict,request, jsonstacklist)
@@ -343,6 +360,18 @@ def userprofile(request, userprofname):
         jsonstacklist = treemapsforallprofile(jsonstacklist,request)
         jsonstacklist = json.dumps(jsonstacklist)
         context_dict['jsonstacklist'] = jsonstacklist
+
+    try:
+        githublist = Githubmodel.objects.filter(users=users)
+        codecademylist = CodeCademymodel.objects.filter(users=users)
+        treehouselist = TeamTreeHousemodel.objects.filter(users=users)
+        codewarslist = Codewarsmodel.objects.filter(users=users)
+        context_dict['githublist'] = githublist
+        context_dict['codecademylist'] = codecademylist
+        context_dict['treehouselist'] = treehouselist
+        context_dict['codewarslist'] = codewarslist
+    except:
+        pass
 
     return render_to_response('studentracker/userprofile.html', context_dict, context)
 
