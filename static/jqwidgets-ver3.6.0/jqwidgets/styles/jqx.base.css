@@ -3810,6 +3810,7 @@ ol li .jqx-listmenu-item-label:before
     color: #222;
     font-size: 15px;
     font-family: Verdana;
+    border: 5px solid #000;
     font-weight: bold;
 }
 .jqx-treemap-legend-label {

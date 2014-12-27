@@ -12,7 +12,6 @@
             {% for field in forms.visible_fields %}
                     {{ field.label_tag }}
                     {{ field }}
-
                 <div class="help-block">{{ field.errors }}</div></br>
             {% endfor %}
             </div>

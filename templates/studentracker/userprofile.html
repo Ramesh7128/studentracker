@@ -1,57 +1,46 @@
 {% extends 'studentracker/base.html' %}
 {% load static %}
 {% block body_block %}
-{#    <div>{{ userprof.id }}</div>#}
-{#    <div>{{ userprof.users.username }}</div>#}
-{#    <div>{{ userprof.github }}</div>#}
-{#    <div>{{ userprof.codecademy }}</div><br><br>#}
     <div class="container">
         <div class="row">
-{#        <div id="chart_div" style="width: 500px; height: 500px;"></div>#}
-{#        <div id="thediv" style="width:500px; height:500px;"></div>#}
             <div id="treemap"></div><br>
-            <div class="col-md-4">
-                <div><b>Github-Repo names</b></div><br>
-                <div>{% for key in data %}
-                        {{ forloop.counter }}
-                        <b>{{key.name}}</b><br>
-                        {% for k,v in key.items %}
-                            {% ifnotequal k "name" %}
-                                {{ k }} : {{ v }}<br>
-                            {% endifnotequal %}
+            <div class="col-md-3">
+                <div><b>Github-Repo names</b></div>
+                <div>{% for key in githublist %}
+                        <b>{% ifchanged %}<br><br>{{key.reponame}}{% endifchanged %}</b><br>
+                        {{ key.stack }}: {{ key.bytes }} bytes
                         {% endfor %}
                         <br>
-                    {% endfor %}
                 </div><br>
                 <div><b>Total points for github:</b>{{ points_github }}</div><br>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div><b>codecademy-courses completed</b></div><br>
-                <div>{% for link in links %}
-                        {{ forloop.counter }}
+                <div>{% for link in codecademylist %}
+                        {{ forloop.counter }} .
                         {{ link }}<br>
                     {% endfor %}<br>
-                <div><b>Total points for Codecademy: </b>{{ points_codecademy }}</div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div><b>Team Tree House</b></div><br>
-                <div>{% for key, value in data_treehouse.items %}
-                        {{ forloop.counter }}
-                        {{ key }} : {{ value }} -points<br>
+                <div>{% for link in treehouselist %}
+                        {{ forloop.counter }} .
+                        {{ link.coursename }} - {{ link.points }}-points<br>
                 {% endfor %}<br>
-                <div><b>Total points for teamtreehouse:</b>{{ points_teamtreehouse }} points</div>
                 </div>
                 <br>
-                <div>github : {{ githublist }}</div>
-                <div>Teamtreehouse: {{ treehouselist }}</div>
-                <div>Codecademy: {{ codecademylist }}</div>
-                <div>Codewars: {{ codewarslist }}</div>
-{#                {{ github_stackpoints }}#}
-{#                {{ jsonstacklist }}#}
-{#                {% for json in jsonstacklist %}#}
-{#                {{ json }}<br>#}
-{#                {% endfor %}#}
+            </div>
+            <div class="col-md-3">
+                <div><b>Code-Wars</b></div><br>
+                <div>{% for link in codewarslist %}
+                    {{ forloop.counter }}
+                    Language - {{ link.language }}<br>
+                    Honors - {{ link.honors }}<br>
+                    Rank - {{ link.rank }}<br>
+                    Completed challenges - {{ link.completedchallenges }}
+                    {% endfor %}<br>
+                </div>
             </div>
         </div>
         </div>

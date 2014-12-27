@@ -5,96 +5,31 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
-        <link rel="stylesheet"
-              href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">
-        <link rel="stylesheet"
-              href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.css">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js">
-        </script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.js">
-        </script>
+{#        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">#}
+{#        <link rel="stylesheet"#}
+{#              href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">#}
+{#        <link rel="stylesheet"#}
+{#              href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.css">#}
+{#        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js">#}
+{#        </script>#}
+{#        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.js">#}
+{#        </script>#}
+
+{############ jqwidgets links ####################}
+
         <script src="{% static 'jqwidgets-ver3.6.0/scripts/jquery-1.11.1.min.js' %}"></script>
         <script src="{% static 'jqwidgets-ver3.6.0/jqwidgets/jqxcore.js' %}"></script>
         <script src="{% static 'jqwidgets-ver3.6.0/jqwidgets/jqxdata.js' %}"></script>
         <script src="{% static 'jqwidgets-ver3.6.0/jqwidgets/jqxtreemap.js' %}"></script>
         <script type="text/javascript" src="{% static 'jqwidgets-ver3.6.0/scripts/demos.js' %}"></script>
         <link rel="stylesheet" href="{% static 'jqwidgets-ver3.6.0/jqwidgets/styles/jqx.base.css' %}"/>
+
+{######## end of jqwidgets #######################}
+
         <script type="text/javascript">
             $(document).ready(function () {
 
                 var data = {{ jsonstacklist|safe }};
-{#                  alert(data);#}
-{#                var data = [#}
-{#                {#}
-{#                    "id": "2",#}
-{#                    "parentid": "1",#}
-{#                    "text": "Hot Chocolate",#}
-{#                    "value": "$5.2",#}
-{#                    "color": "#90FF90",#}
-{#                }, {#}
-{#                    "id": "3",#}
-{#                    "parentid": "1",#}
-{#                    "text": "Peppermint Hot Chocolate",#}
-{#                    "value": "$4.0",#}
-{#                    "color": "#97F90"#}
-{#                }, {#}
-{#                    "id": "4",#}
-{#                    "parentid": "1",#}
-{#                    "text": "Salted Caramel Hot Chocolate",#}
-{#                    "value": "$2.4"#}
-{#                }, {#}
-{#                    "id": "5",#}
-{#                    "parentid": "1",#}
-{#                    "text": "White Hot Chocolate",#}
-{#                    "value": "$2.5"#}
-{#                }, {#}
-{#                    "text": "Chocolate Beverage",#}
-{#                    "id": "1",#}
-{#                    "parentid": "-1",#}
-{#                    "value": "$1.1"#}
-{#                }, {#}
-{#                    "id": "6",#}
-{#                    "text": "Espresso Beverage",#}
-{#                    "parentid": "-1",#}
-{#                    "value": "$0.9"#}
-{#                }, {#}
-{#                    "id": "7",#}
-{#                    "parentid": "6",#}
-{#                    "text": "Caffe Americano",#}
-{#                    "value": "$1.2"#}
-{#                }, {#}
-{#                    "id": "8",#}
-{#                    "text": "Caffe Latte",#}
-{#                    "parentid": "6",#}
-{#                    "value": "$3.3"#}
-{#                }, {#}
-{#                    "id": "9",#}
-{#                    "text": "Caffe Mocha",#}
-{#                    "parentid": "6",#}
-{#                    "value": "$2.5"#}
-{#                }, {#}
-{#                    "id": "10",#}
-{#                    "text": "Cappuccino",#}
-{#                    "parentid": "6",#}
-{#                    "value": "$1.5"#}
-{#                }, {#}
-{#                    "id": "11",#}
-{#                    "text": "Pumpkin Spice Latte",#}
-{#                    "parentid": "6",#}
-{#                    "value": "$1.6"#}
-{#                }, {#}
-{#                    "id": "12",#}
-{#                    "text": "Frappuccino",#}
-{#                    "parentid": "-1"#}
-{#                }, {#}
-{#                    "id": "13",#}
-{#                    "text": "Caffe Vanilla Frappuccino",#}
-{#                    "parentid": "12",#}
-{#                    "value": "$1.2"#}
-{#                }];#}
-{##}
-{#                // prepare the data#}
                 var source =
                 {
                     datatype: "json",
@@ -125,14 +60,12 @@
                     colorRange: 50,
                     renderCallbacks: {
                         '*': function (element, data) {
-{#                            console.log(element);#}
-{#                            console.log(data);#}
                             element.html('<span style="font-size: 18px;" class="jqx-treemap-label">' + data.label + '</span>');
                 			return true;
                             if (!data.parent) {
                                 element.css({
                                     backgroundColor: '#fff',
-                                    border: '3px solid #000'
+                                    border: '5px solid #000',
                                 });
                             }
                             else {
@@ -154,6 +87,7 @@
     </head>
 
     <body>
+
         <div class="container">
         <nav role="navigation" class="navbar navbar-inverse">
             <div class="navbar-header">
@@ -163,7 +97,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">{% block content %}Student-tracker{% endblock %}</a>
+                <a href="/">Student-tracker</a>
             </div>
 
             <div id="navbarCollapse" class="collapse navbar-collapse">
@@ -174,7 +108,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
-                        <li><a href="/userprofile/{{ user.username }}"> {{user.username|upper}}</a></li>
+                        <li><a href="/userprofile/{{ user.id }}"> {{user.username|upper}}</a></li>
                         <li><a href="/user/logout/">logout</a></li>
                     {% else %}
                         <li><a href="/user/register/">Register</a></li>

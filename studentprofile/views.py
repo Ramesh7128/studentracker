@@ -10,9 +10,9 @@ from datetime import datetime
 import urllib2
 import json
 from studentprofile.forms import profileform
-from studentprofile.models import profile, stacklistmodel, Githubmodel, TeamTreeHousemodel, CodeCademymodel, Codewarsmodel
+from studentprofile.models import profile, stacklistmodel, Githubmodel, TeamTreeHousemodel, CodeCademymodel, Codewarsmodel, UserProfile
 from bs4 import BeautifulSoup
-import random
+from django.db.models import Q
 
 
 
@@ -21,7 +21,13 @@ stackcolors = {"python":"#FF0000", "javascript":"#00FF00", "jquery":"#00FF00", "
 def index(request):
     context = RequestContext(request)
     context_dict = {}
-    return render_to_response('studentracker/base.html', context_dict, context)
+    try:
+        profile_list = UserProfile.objects.filter(~Q(user=request.user))
+    except:
+        profile_list = UserProfile.objects.all()
+    context_dict['profile_list'] = profile_list
+
+    return render_to_response('studentracker/index.html', context_dict, context)
 
 
 def addlinks(request):
@@ -58,21 +64,23 @@ def colorsfunction(colorvalue):
     return color
 
 
-def codewars(context_dict, request, jsonstacklist):
+def codewars(context_dict, request, jsonstacklist, users):
 
     hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
        'Accept-Encoding': 'none',
        'Accept-Language': 'en-US,en;q=0.8',
-       'Connection': 'keep-alive'}
+       'Connection': 'keep-alive',
+       'Authorization': 'C-RRG9-N3JTTRjS5px1i',
+       }
 
     dictlan = {}
     users = User.objects.get(username=request.user)
     user_url = profile.objects.get(users=users)
     user_git = str(user_url.codewars)
     list_url = user_git.split('/')
-    url = "https://www.codewars.com/api/v1/users/"+list_url[-1]
+    url = "https://www.codewars.com/users/"+list_url[-1]+".json"
     req = urllib2.Request(url, headers=hdr)
     source = urllib2.urlopen(req)
     data = json.load(source)
@@ -82,15 +90,15 @@ def codewars(context_dict, request, jsonstacklist):
             dictlan = value['languages']
         if key == "honor":
             honor = int(value)
-        if key == "codeChallenges":
-            completed = int(value['totalCompleted'])
+        if key == "completed":
+            completed = int(len(value))
 
     for k, val in dictlan.items():
         jsonlength = len(jsonstacklist) + 1
         l = str(k.strip())
         colors = colorsfunction(l)
         Codewarsmodel.objects.create(users=users, honors=honor, language=k, rank=dictlan[k]['name'],completedchallenges=completed)
-        stacklistmodel.objects.create(users=users, stack=k,parentid=4,value=(int(dictlan[k]['score']))/10,colors=colors)
+        stacklistmodel.objects.create(users=users, stack=k,parentid=4,value=(int(dictlan[k]['score'])),colors=colors)
 
     userprof = profile.objects.get(users=request.user)
     context_dict['userprof'] = userprof
@@ -99,7 +107,7 @@ def codewars(context_dict, request, jsonstacklist):
 
 
 
-def github(context_dict, request, jsonstacklist):
+def github(context_dict, request, jsonstacklist, users):
 
     hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -180,7 +188,7 @@ def github(context_dict, request, jsonstacklist):
     return context_dict, jsonstacklist
 
 
-def teamtreehouse(context_dict, request, jsonstacklist):
+def teamtreehouse(context_dict, request, jsonstacklist, users):
 
     hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -192,7 +200,7 @@ def teamtreehouse(context_dict, request, jsonstacklist):
     dicts = []
     points_teamtreehouse = 0
 
-    users = User.objects.get(username=request.user)
+    #users = User.objects.get(username=request.user)
     user_url = profile.objects.get(users=users)
     user_git = str(user_url.teamtreehouse)
     list_url = user_git.split('/')
@@ -223,11 +231,11 @@ def teamtreehouse(context_dict, request, jsonstacklist):
     return context_dict, jsonstacklist
 
 
-def codecademy(context_dict, request, jsonstacklist):
+def codecademy(context_dict, request, jsonstacklist, users):
 
     codecademy = []
 
-    users = User.objects.get(username=request.user)
+    #users = User.objects.get(username=request.user)
     user_url = profile.objects.get(users=users)
 
     user_codecademy = str(user_url.codecademy)
@@ -250,9 +258,9 @@ def codecademy(context_dict, request, jsonstacklist):
         stacklistmodel.objects.create(users=users, stack=l,parentid=2,value=10,colors=colors)
     return context_dict, jsonstacklist
 
-def treemapsforallprofile(jsonstacklist,request):
-    userskey = User.objects.get(username=request.user)
-    stackobjects = stacklistmodel.objects.filter(users=userskey)
+def treemapsforallprofile(jsonstacklist,request, users):
+    #userskey = User.objects.get(username=request.user)
+    stackobjects = stacklistmodel.objects.filter(users=users)
     for stack in stackobjects:
         jsonstacklist.append({
             "id": stack.id+4,
@@ -265,7 +273,7 @@ def treemapsforallprofile(jsonstacklist,request):
     return jsonstacklist
 
 
-def userprofile(request, userprofname):
+def userprofile(request, userid):
     context = RequestContext(request)
     context_dict = {}
     jsonstacklist = []
@@ -290,16 +298,16 @@ def userprofile(request, userprofname):
                 "parentid": "-1"
             })
 
-    users = User.objects.get(username=request.user)
+    users = User.objects.get(id=userid)
     prof = stacklistmodel.objects.filter(users=users)
 
     if not prof:
-        context_dict, jsonstacklist = github(context_dict,request, jsonstacklist)
-        context_dict, jsonstacklist = codecademy(context_dict,request, jsonstacklist)
-        context_dict, jsonstacklist = teamtreehouse(context_dict,request, jsonstacklist)
-        context_dict, jsonstacklist = codewars(context_dict,request, jsonstacklist)
+        context_dict, jsonstacklist = github(context_dict,request, jsonstacklist, users)
+        context_dict, jsonstacklist = codecademy(context_dict,request, jsonstacklist, users)
+        context_dict, jsonstacklist = teamtreehouse(context_dict,request, jsonstacklist, users)
+        context_dict, jsonstacklist = codewars(context_dict,request, jsonstacklist, users)
 
-    jsonstacklist = treemapsforallprofile(jsonstacklist,request)
+    jsonstacklist = treemapsforallprofile(jsonstacklist,request, users)
     jsonstacklist = json.dumps(jsonstacklist)
     context_dict['jsonstacklist'] = jsonstacklist
 

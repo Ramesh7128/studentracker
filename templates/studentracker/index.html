@@ -1,0 +1,29 @@
+{% extends 'studentracker/base.html' %}
+{% block body_block %}
+        <div class="container">
+{#            <img class="img-responsive center-block" src="{{STATIC_URL}}/office1.jpg">#}
+            <br><br>
+            <div class="row">
+            <form class="form-horizontal" method="post" action="/">
+                {% csrf_token %}
+                <input type="text" name="location" placeholder="location" value="" size="50" />
+                <input class="btn btn-primary" type="submit" value="submit" />
+            </form>
+            <br><br>
+            {% for prof in profile_list %}
+                <div class="col-md-3">
+                    <a href="/prof/{{prof.user.id}}"><img src="{{ MEDIA_URL }}/{{prof.picture}}" width="150" height="150">
+                    <p><b>User: </b>{{prof.user.username}}</p>
+
+{#                    {% ifequal off.users used %}#}
+{#                    <form method="post" action="/">#}
+{#                        {% csrf_token %}#}
+{#                        <input type="hidden" name="title" value="{{off.id}}">#}
+{#                        <input class="btn btn-danger" type="submit" name="del" value="del">#}
+{#                    </form>#}
+{#                    {% endifequal %}#}
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+{% endblock %}
