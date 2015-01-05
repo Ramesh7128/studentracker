@@ -42,6 +42,7 @@ class CodeCademymodel(models.Model):
     users = models.ForeignKey(User)
     coursename = models.CharField(max_length=100)
 
+
     def __unicode__(self):
         return self.coursename
 

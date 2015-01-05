@@ -3796,7 +3796,7 @@ ol li .jqx-listmenu-item-label:before
 .jqx-treemap-rectangle {
     font-size: 13px;
     font-weight: normal;
-    border: 1px solid #555;
+    border: 1px solid #FFFFFF;
     color: #222;
     text-shadow: 0px 0px 0px;
     overflow: hidden;
@@ -3810,7 +3810,7 @@ ol li .jqx-listmenu-item-label:before
     color: #222;
     font-size: 15px;
     font-family: Verdana;
-    border: 5px solid #000;
+    border: 3px solid #000;
     font-weight: bold;
 }
 .jqx-treemap-legend-label {

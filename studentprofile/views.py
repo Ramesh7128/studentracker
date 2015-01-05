@@ -17,15 +17,28 @@ from django.db.models import Q
 
 
 
-stackcolors = {"python":"#FF0000", "javascript":"#00FF00", "jquery":"#00FF00", "ruby":"#0000FF", "php":"#00FFFF", "css":"#C0C0C0", "html":"#C0C0C0",}
+stackcolors = {"python":"#FF0000", "javascript":"#00FF00", "jquery":"#00FF00", "ruby":"#0000FF", "php":"#00FFFF", "css":"#4845FA", "html":"#4845FA",}
 def index(request):
     context = RequestContext(request)
     context_dict = {}
-    try:
-        profile_list = UserProfile.objects.filter(~Q(user=request.user))
-    except:
-        profile_list = UserProfile.objects.all()
-    context_dict['profile_list'] = profile_list
+    if request.method == 'GET':
+        try:
+            profile_list = UserProfile.objects.filter(~Q(user=request.user))
+        except:
+            profile_list = UserProfile.objects.all()
+        context_dict['profile_list'] = profile_list
+    elif request.method == 'POST':
+        if 'username' in request.POST:
+            username = request.POST.get('username')
+            try:
+                if username:
+                    users = User.objects.get(username=username)
+                    profile_list = UserProfile.objects.filter(user=users)
+                else:
+                    profile_list = UserProfile.objects.all()
+                context_dict['profile_list'] = profile_list
+            except:
+                pass
 
     return render_to_response('studentracker/index.html', context_dict, context)
 
@@ -60,7 +73,7 @@ def colorsfunction(colorvalue):
     try:
         color = stackcolors[colorvalue]
     except:
-            color = "#000000"
+            color = "#E33D26"
     return color
 
 
@@ -262,12 +275,13 @@ def treemapsforallprofile(jsonstacklist,request, users):
     #userskey = User.objects.get(username=request.user)
     stackobjects = stacklistmodel.objects.filter(users=users)
     for stack in stackobjects:
+        test = colorsfunction(stack.stack)
         jsonstacklist.append({
             "id": stack.id+4,
             "text": stack.stack,
             "parentid": stack.parentid,
             "value": stack.value,
-            "color": stack.colors,
+            "color": test,
         }
         )
     return jsonstacklist
