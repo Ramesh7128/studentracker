@@ -23,7 +23,7 @@ def get_student_list(max_results=0, starts_with=''):
         profile_list = []
         if starts_with:
                 users = User.objects.filter(username__istartswith=starts_with)
-                profile_list = UserProfile.objects.filter(user=users)
+                profile_list = UserProfile.objects.filter(user__in=users)
 
         if max_results > 0:
                 if len(profile_list) > max_results:
@@ -52,18 +52,18 @@ def index(request):
         except:
             profile_list = UserProfile.objects.all()
         context_dict['profile_list'] = profile_list
-    elif request.method == 'POST':
-        if 'username' in request.POST:
-            username = request.POST.get('username')
-            try:
-                if username:
-                    users = User.objects.get(username=username)
-                    profile_list = UserProfile.objects.filter(user=users)
-                else:
-                    profile_list = UserProfile.objects.all()
-                context_dict['profile_list'] = profile_list
-            except:
-                pass
+    # elif request.method == 'POST':
+    #     if 'username' in request.POST:
+    #         username = request.POST.get('username')
+    #         try:
+    #             if username:
+    #                 users = User.objects.get(username=username)
+    #                 profile_list = UserProfile.objects.filter(user=users)
+    #             else:
+    #                 profile_list = UserProfile.objects.all()
+    #             context_dict['profile_list'] = profile_list
+    #         except:
+    #             pass
 
     return render_to_response('studentracker/index.html', context_dict, context)
 

@@ -36,8 +36,8 @@
       <file leaf-file-name="studentlist.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/studentracker/studentlist.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.0" vertical-offset="0" max-vertical-offset="252">
-              <caret line="3" column="71" selection-start-line="3" selection-start-column="71" selection-end-line="3" selection-end-column="71" />
+            <state vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="252">
+              <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#li#0;n#ul#0;n#!!top" expanded="true" />
               </folding>
@@ -95,21 +95,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userprofile.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="userprofile.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/studentracker/userprofile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.90425533" vertical-offset="884" max-vertical-offset="1332">
-              <caret line="68" column="14" selection-start-line="68" selection-start-column="14" selection-end-line="68" selection-end-column="14" />
+            <state vertical-scroll-proportion="-0.6666667" vertical-offset="0" max-vertical-offset="1332">
+              <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/studentprofile/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1872" max-vertical-offset="7776">
-              <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.72307694" vertical-offset="186" max-vertical-offset="7776">
+              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding>
                 <element signature="e#26#68#0" expanded="true" />
               </folding>
@@ -156,9 +156,9 @@
         <option value="$PROJECT_DIR$/studentprofile/urls.py" />
         <option value="$PROJECT_DIR$/static/js/search.js" />
         <option value="$PROJECT_DIR$/templates/studentracker/base.html" />
+        <option value="$PROJECT_DIR$/templates/studentracker/userprofile.html" />
         <option value="$PROJECT_DIR$/templates/studentracker/studentlist.html" />
         <option value="$PROJECT_DIR$/studentprofile/views.py" />
-        <option value="$PROJECT_DIR$/templates/studentracker/userprofile.html" />
       </list>
     </option>
   </component>
@@ -314,7 +314,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$/tango-with-django" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="us&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/userprofile.html&#10;&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/views.py&#10;bas&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/base.html&#10;vi&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/views.py&#10;ur&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/urls.py&#10;ba&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/base.html&#10;u&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/urls.py&#10;b&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/base.html&#10;in&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/index.html&#10;v&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/views.py&#10;view&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/views.py&#10;mod&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/models.py&#10;vie&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/views.py&#10;a&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/addlinks.html&#10;urls&#9;FILE&#9;file:///home/ramesh/studentracker/oautherise/urls.py&#10;ind&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/index.html&#10;i&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/index.html&#10;user&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/userprofile.html&#10;inde&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/index.html&#10;ad&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/admin.py&#10;base&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/base.html&#10;mo&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/models.py" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/studentlist.html&#10;v&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/views.py&#10;us&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/userprofile.html&#10;bas&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/base.html&#10;vi&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/views.py&#10;ur&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/urls.py&#10;ba&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/base.html&#10;u&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/urls.py&#10;b&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/base.html&#10;in&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/index.html&#10;view&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/views.py&#10;mod&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/models.py&#10;vie&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/views.py&#10;a&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/addlinks.html&#10;urls&#9;FILE&#9;file:///home/ramesh/studentracker/oautherise/urls.py&#10;ind&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/index.html&#10;i&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/index.html&#10;user&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/userprofile.html&#10;inde&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/index.html&#10;ad&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/admin.py&#10;base&#9;FILE&#9;file:///home/ramesh/studentracker/templates/studentracker/base.html&#10;mo&#9;FILE&#9;file:///home/ramesh/studentracker/studentprofile/models.py" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -980,16 +980,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/studentracker/studentlist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.0" vertical-offset="0" max-vertical-offset="252">
-          <caret line="3" column="71" selection-start-line="3" selection-start-column="71" selection-end-line="3" selection-end-column="71" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#li#0;n#ul#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/studentprofile/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="324" max-vertical-offset="1602">
@@ -998,21 +988,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/studentprofile/views.py">
+    <entry file="file://$PROJECT_DIR$/templates/studentracker/userprofile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1872" max-vertical-offset="7776">
-          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+        <state vertical-scroll-proportion="-0.6666667" vertical-offset="0" max-vertical-offset="1332">
+          <caret line="1" column="3" selection-start-line="1" selection-start-column="3" selection-end-line="1" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/studentracker/studentlist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="252">
+          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
           <folding>
-            <element signature="e#26#68#0" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#li#0;n#ul#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/studentracker/userprofile.html">
+    <entry file="file://$PROJECT_DIR$/studentprofile/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.90425533" vertical-offset="884" max-vertical-offset="1332">
-          <caret line="68" column="14" selection-start-line="68" selection-start-column="14" selection-end-line="68" selection-end-column="14" />
-          <folding />
+        <state vertical-scroll-proportion="0.72307694" vertical-offset="186" max-vertical-offset="7776">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding>
+            <element signature="e#26#68#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
