@@ -1,21 +1,46 @@
 {% extends 'studentracker/base.html' %}
 {% load static %}
+{% block navbar %}
 {% block body_block %}
-    <div class="hero-unit">
-        <h2>Login</h2>
+    <br><br><br><br>
 
-        <div class="container">
-        <form class="form-horizontal" id="login_form" method="post" action="/user/login/">
-            {% csrf_token %}
-            <div class="col-xs-6">
-            <input type="text" name="username" placeholder="Username:" value="" size="50" />
-            <br><br>
-            <input type="password" name="password" placeholder="Password:" value="" size="50" />
-            </div>
-            <div class="col-xs-offset-2 col-xs-10">
-            <br><input class="btn btn-primary" type="submit" value="submit" />
-            </div>
-        </form>
+    <div class="container">
+        <div class="row">
+        <div class="col-md-5">
+            <form class="form-horizontal" method="post" action="/user/login/">
+                {% csrf_token %}
+                <fieldset>
+                <legend>Login</legend>
+
+                <div class="form-group">
+                    <label for="inputEmail" class="col-lg-2 control-label">Username</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="inputEmail" name="username" placeholder="Username" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail" class="col-lg-2 control-label">password</label>
+                    <div class="col-lg-10">
+                        <input class="form-control" id="inputEmail" name="password" placeholder="Password" type="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <br>
+                        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+                </fieldset>
+            </form>
+        </div>
     </div>
-{% endblock %}
+    </div>
+    </div>
 
+
+
+
+{% endblock %}
+{% endblock %}

@@ -232,27 +232,5 @@
 
 {#    #########################end trail##########################}
 
-    <div class="hero-unit">
-        <h1>Add links</h1>
 
-        <div class="container">
-        <form class="form-horizontal" id="login_form" method="post" action="/addlinks/"
-                enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="col-xs-6">
-            {% for field in forms.visible_fields %}
-                    {{ field.label_tag }}
-                    {{ field }}
-                <div class="help-block">{{ field.errors }}</div></br>
-            {% endfor %}
-            </div>
-            <div class="col-xs-offset-2 col-xs-10">
-                <input class="btn btn-primary" type="submit" name="submit" value="Add" />
-            </div>
-        </form>
-        </div>
-
-    </div>
-
-    {{ stack4 }} - - {{ points4 }}
 {% endblock %}

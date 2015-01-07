@@ -52,18 +52,6 @@ def index(request):
         except:
             profile_list = UserProfile.objects.all()
         context_dict['profile_list'] = profile_list
-    # elif request.method == 'POST':
-    #     if 'username' in request.POST:
-    #         username = request.POST.get('username')
-    #         try:
-    #             if username:
-    #                 users = User.objects.get(username=username)
-    #                 profile_list = UserProfile.objects.filter(user=users)
-    #             else:
-    #                 profile_list = UserProfile.objects.all()
-    #             context_dict['profile_list'] = profile_list
-    #         except:
-    #             pass
 
     return render_to_response('studentracker/index.html', context_dict, context)
 
