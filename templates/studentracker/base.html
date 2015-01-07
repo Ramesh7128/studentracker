@@ -6,6 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
 
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
         <link href="{% static 'css/bootswatch.css' %}" rel="stylesheet" media="screen">
         <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.js">
@@ -13,12 +16,30 @@
         <style>
             .navbar {
                 padding-top: 7px;
-                background-color: #fa412a;
+                background-color: #FF4719;
                 height: 70px;
                 font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
                 font-size: 17px;
                 font-weight: 500;
+                border-radius: 10px;
 
+            }
+            .foot {
+                padding: 15px;
+                padding-bottom: 0px;
+                background: #F90101;
+                border-radius: 10px;
+                height: 50px;
+                color: #FFFFFF;
+            }
+            .col-md-2 > .backgroun  {
+                padding: 15px;
+                background: #19A319;
+                border-radius: 15px;
+                height: 550px;
+            }
+            .text-center {
+                color: #FFFFFF;
             }
         </style>
 
@@ -62,8 +83,8 @@
                 // specifies the mapping between the 'text' and 'label' fields.
                 var records = dataAdapter.getRecordsHierarchy('id', 'parentid', 'items', [{ name: 'text', map: 'label' }]);
                 $('#treemap').jqxTreeMap({
-                    width: 500,
-                    height: 500,
+                    width: 800,
+                    height: 800,
                     source: records,
                     colorRange: 0,
                     renderCallbacks: {
@@ -90,7 +111,7 @@
 
 
 
-<div class="navbar navbar-default">
+<div class="navbar navbar-default navbar-fixed-top">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
       <span class="icon-bar"></span>
@@ -103,13 +124,14 @@
     <ul class="nav navbar-nav">
       <li><a href="#" >About</a></li>
     </ul>
-    <form class="navbar-form navbar-left">
-      <input type="text" class="form-control col-lg-8" placeholder="Search">
+    <form class="navbar-form navbar-left" method="post" action="/">
+      {% csrf_token %}
+      <input type="text" name="username" class="form-control col-lg-8" placeholder="Search">
     </form>
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown">
         {% if not user.is_authenticated %}
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Signup /Login<b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Signup /Login <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a href="/user/login/">Login</a></li>
           <li><a href="/user/register/">Register</a></li>
@@ -118,10 +140,10 @@
       </li>
       <li class="dropdown">
       {% if user.is_authenticated %}
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.username|title}}<b class="caret"></b></a>
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">{{user.username|title}}<b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Profile</a></li>
-\          <li class="divider"></li>
+          <li><a href="/userprofile/{{ user.id }}">Profile</a></li>
+          <li><a href="/addlinks/">AddInfo</a></li>
           <li><a href="/user/logout/">Logout</a></li>
         </ul>
       {% endif %}
@@ -132,7 +154,7 @@
 
 
 
-    <div class="container-fluid">
+{#    <div class="container-fluid">#}
 {#            <div class="row-fluid">#}
 {#                <div class="span3">#}
 {#                    <div class="well sidebar-nav">#}
@@ -166,22 +188,64 @@
 {#                    </div>#}
 {#                    <!--/.well -->#}
 {#                </div>#}
-                <!--/span-->
-                <div class="span9">
-                    {% block body_block %}
-                    {% endblock %}
-                </div>
+{#                <!--/span-->#}
+
+
+
                 <!--/span-->
             </div>
             <!--/row-->
         </div>
         <!--/.fluid-container-->
-        <hr>
+
         </div>
+
+        {% block navbar %}
+
+            <br><br><br>
+{#        <img width="100%" class="cont" src="{{STATIC_URL}}/stud.png">#}
+        <div class="container-fluid">
+
+{#            <img class="img-responsive center-block" src="{{STATIC_URL}}/office1.jpg">#}
+
+            <div class="row">
+                <div class="col-md-2">
+                <br>
+                <div class="backgroun">
+                <div class="text-center"><b>Student-List</b></div><br>
+                <ul>
+                {% for prof in profile_list %}
+
+{#                    <a href="/prof/{{prof.user.id}}"><img height="50px" width="50px" src="{{ MEDIA_URL }}/{{prof.picture}}"></a>#}
+                    <li><a class="text-center" style="color: #FFFFFF" href="/prof/{{prof.user.id}}">{{prof.user.username}}</a></li>
+
+
+{#                    {% ifequal off.users used %}#}
+{#                    <form method="post" action="/">#}
+{#                        {% csrf_token %}#}
+{#                        <input type="hidden" name="title" value="{{off.id}}">#}
+{#                        <input class="btn btn-danger" type="submit" name="del" value="del">#}
+{#                    </form>#}
+{#                    {% endifequal %}#}
+                {% endfor %}
+                </ul>
+                </div>
+                </div>
+            <div class="col-md-10">
+        {% block body_block %}
+        {% endblock %}
+        </div>
+            </div>
+        </div>
+        {% endblock %}
+{#        <hr>#}
+        <br>
+        <div class="foot">
         <footer>
                 <div class="container">
                 <p>&copy; StudentTracker: Social network for coders</p>
             </div>
         </footer>
+        </div>
     </body>
 </html>

@@ -1,6 +1,237 @@
 {% extends 'studentracker/base.html' %}
 {% load static %}
 {% block body_block %}
+    <br><br><br><br>
+
+{#    ################trial########################}
+  <div class="container">
+  <div class="row">
+    <div class="col-md-6">
+  <form class="form-horizontal" method="post" action="/addlinks/">
+  {% csrf_token %}
+  <fieldset>
+    <legend>Profile Info</legend>
+
+{#      github#}
+    <div class="form-group">
+      <label for="inputEmail" class="col-lg-2 control-label">Github</label>
+      <div class="col-lg-10">
+        <input class="form-control" id="inputEmail" name="github" placeholder="Githublink" type="text">
+      </div>
+    </div>
+
+{#    codecademy#}
+    <div class="form-group">
+      <label for="inputEmail" class="col-lg-2 control-label">Codecademy</label>
+      <div class="col-lg-10">
+        <input class="form-control" id="inputEmail" name="codecademy" placeholder="Codecademylink" type="text">
+      </div>
+    </div>
+
+{#    codewars#}
+    <div class="form-group">
+      <label for="inputEmail" class="col-lg-2 control-label">Codewars</label>
+      <div class="col-lg-10">
+        <input class="form-control" id="inputEmail" name="codewars" placeholder="Codewarslink" type="text">
+      </div>
+    </div>
+
+{#    TeamTreehouse  #}
+    <div class="form-group">
+      <label for="inputEmail" class="col-lg-2 control-label">TTreeHouse</label>
+      <div class="col-lg-10">
+        <input class="form-control" id="inputEmail" name="teamtreehouse" placeholder="TeamTreehouselink" type="text">
+      </div>
+    </div>
+
+{#    <div class="form-group">#}
+{#      <label for="inputPassword" class="col-lg-2 control-label">Password</label>#}
+{#      <div class="col-lg-10">#}
+{#        <input class="form-control" id="inputPassword" placeholder="Password" type="password">#}
+{#        <div class="checkbox">#}
+{#          <label>#}
+{#            <input type="checkbox"> Checkbox#}
+{#          </label>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+
+
+
+{#    <div class="form-group">#}
+{#      <label class="col-lg-2 control-label">Radios</label>#}
+{#      <div class="col-lg-10">#}
+{#        <div class="radio">#}
+{#          <label>#}
+{#            <input name="optionsRadios" id="optionsRadios1" value="option1" checked="" type="radio">#}
+{#            Option one is this#}
+{#          </label>#}
+{#        </div>#}
+{#        <div class="radio">#}
+{#          <label>#}
+{#            <input name="optionsRadios" id="optionsRadios2" value="option2" type="radio">#}
+{#            Option two can be something else#}
+{#          </label>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+    <br><br><hr>
+
+    <legend>Rate your proficiency for the respective stacks</legend>
+    <div class="form-group">
+      <label for="textArea" class="col-lg-2 control-label">Workexp</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" rows="3" name="workex" id="textArea"></textarea>
+        <span class="help-block">Your work experience and the stacks you have worked with</span>
+      </div>
+    </div>
+        <div class="col-md-12">
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label">Stack</label>
+              <div class="col-lg-10">
+                <select class="form-control" name="stack1" id="select">
+                  <option>-</option>
+                  <option>Python</option>
+                  <option>Javascript</option>
+                  <option>Ruby</option>
+                  <option>C/C#/C++</option>
+                  <option>HTML/CSS</option>
+                  <option>Java</option>
+                </select>
+              </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label">Points</label>
+              <div class="col-lg-10">
+                <select class="form-control" name="points1" id="select">
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+            </div>
+        </div>
+      <div class="col-md-12">
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label">Stack</label>
+              <div class="col-lg-10">
+                <select class="form-control" name="stack2" id="select">
+                  <option>-</option>
+                  <option>Python</option>
+                  <option>Javascript</option>
+                  <option>Ruby</option>
+                  <option>C/C#/C++</option>
+                  <option>HTML/CSS</option>
+                  <option>Java</option>
+                </select>
+              </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label">Points </label>
+              <div class="col-lg-10">
+                <select class="form-control" name="points2" id="select">
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+            </div>
+        </div>
+      <div class="col-md-12">
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label">Stack</label>
+              <div class="col-lg-10">
+                <select class="form-control" name="stack3" id="select">
+                  <option>-</option>
+                  <option>Python</option>
+                  <option>Javascript</option>
+                  <option>Ruby</option>
+                  <option>C/C#/C++</option>
+                  <option>HTML/CSS</option>
+                  <option>Java</option>
+                </select>
+              </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label">Points</label>
+              <div class="col-lg-10">
+                <select class="form-control" name="points3" id="select">
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+            </div>
+        </div>
+      <div class="col-md-12">
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label">Stack</label>
+              <div class="col-lg-10">
+                <select class="form-control" name="stack4" id="select">
+                  <option>-</option>
+                  <option>Python</option>
+                  <option>Javascript</option>
+                  <option>Ruby</option>
+                  <option>C/C#/C++</option>
+                  <option>HTML/CSS</option>
+                  <option>Java</option>
+                </select>
+              </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label">Points</label>
+              <div class="col-lg-10">
+                <select class="form-control" name="points4" id="select">
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+            </div>
+        </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+          <br><br>
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+    </div>
+    </div>
+    </div>
+
+{#    #########################end trail##########################}
+
     <div class="hero-unit">
         <h1>Add links</h1>
 
@@ -22,4 +253,6 @@
         </div>
 
     </div>
+
+    {{ stack4 }} - - {{ points4 }}
 {% endblock %}

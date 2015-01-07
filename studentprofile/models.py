@@ -19,6 +19,25 @@ class profile(models.Model):
     def __unicode__(self):
         return self.users
 
+#### work on this logic ####
+
+class personalprofile(models.Model):
+    users = models.ForeignKey(User)
+    stack1 = models.CharField(max_length=40)
+    point1 = models.IntegerField()
+    stack2 = models.CharField(max_length=40)
+    point2 = models.IntegerField()
+    stack3 = models.CharField(max_length=40)
+    point3 = models.IntegerField()
+    stack4 = models.CharField(max_length=40)
+    point4 = models.IntegerField()
+    workex = models.TextField(max_length=200)
+
+    def __unicode__(self):
+        return self.workex
+
+####################################
+
 class stacklistmodel(models.Model):
     users = models.ForeignKey(User)
     stack = models.CharField(max_length=50)

@@ -10,7 +10,7 @@ from datetime import datetime
 import urllib2
 import json
 from studentprofile.forms import profileform
-from studentprofile.models import profile, stacklistmodel, Githubmodel, TeamTreeHousemodel, CodeCademymodel, Codewarsmodel, UserProfile
+from studentprofile.models import profile, personalprofile, stacklistmodel, Githubmodel, TeamTreeHousemodel, CodeCademymodel, Codewarsmodel, UserProfile
 from bs4 import BeautifulSoup
 from django.db.models import Q
 
@@ -23,7 +23,8 @@ def index(request):
     context_dict = {}
     if request.method == 'GET':
         try:
-            profile_list = UserProfile.objects.filter(~Q(user=request.user))
+            # profile_list = UserProfile.objects.filter(~Q(user=request.user))
+            profile_list = UserProfile.objects.all()
         except:
             profile_list = UserProfile.objects.all()
         context_dict['profile_list'] = profile_list
@@ -46,24 +47,43 @@ def index(request):
 def addlinks(request):
     context = RequestContext(request)
     context_dict = {}
-    if request.method == 'GET':
-        form = profileform()
-    else:
-        form = profileform(request.POST)
-        if form.is_valid():
-            profiles = form.save(commit=False)
+    users = User.objects.get(username=request.user)
+    # if request.method == 'GET':
+    #     form = profileform()
+    # else:
+    #     form = profileform(request.POST)
+    #     if form.is_valid():
+    #         profiles = form.save(commit=False)
+    #
+    #         try:
+    #             users = User.objects.get(username=request.user)
+    #             profiles.users = users
+    #             profiles.save()
+    #             return HttpResponseRedirect('/')
+    #         except:
+    #             pass
+    #     else:
+    #         print form.errors
+    if request.method=='POST':
+        git = request.POST.get('github')
+        codecad = request.POST.get('codecademy')
+        codewar = request.POST.get('codewars')
+        tthouse = request.POST.get('teamtreehouse')
+        stack1 = request.POST.get('stack1')
+        points1 = request.POST.get('points1')
+        stack2 = request.POST.get('stack2')
+        points2 = request.POST.get('points2')
+        stack3 = request.POST.get('stack3')
+        points3 = request.POST.get('points3')
+        stack4 = request.POST.get('stack4')
+        points4 = request.POST.get('points4')
+        workexp = request.POST.get('workex')
 
-            try:
-                users = User.objects.get(username=request.user)
-                profiles.users = users
-                profiles.save()
-                return HttpResponseRedirect('/')
-            except:
-                pass
-        else:
-            print form.errors
+        profile.objects.create(users=users,github=git,codecademy=codecad,teamtreehouse=tthouse,codewars=codewar)
+        personalprofile.objects.create(users=users, workex=workexp, stack1=stack1, point1=points1, stack2=stack2, point2=points2, stack3=stack3, point3=points3, stack4=stack4, point4 = points4)
+        return HttpResponseRedirect('/')
 
-    context_dict['forms'] = form
+    # context_dict['forms'] = form
 
     return render_to_response('studentracker/addlinks.html', context_dict, context)
 
@@ -89,7 +109,7 @@ def codewars(context_dict, request, jsonstacklist, users):
        }
 
     dictlan = {}
-    users = User.objects.get(username=request.user)
+    # users = User.objects.get(username=request.user)
     user_url = profile.objects.get(users=users)
     user_git = str(user_url.codewars)
     list_url = user_git.split('/')
@@ -134,7 +154,7 @@ def github(context_dict, request, jsonstacklist, users):
     github_lang = []
     github_stackpoints = {}
 
-    users = User.objects.get(username=request.user)
+    # users = User.objects.get(username=request.user)
     user_url = profile.objects.get(users=users)
     user_git = str(user_url.github)
     list_url = user_git.split('/')
@@ -238,7 +258,7 @@ def teamtreehouse(context_dict, request, jsonstacklist, users):
         l = str(key.strip())
         colors = colorsfunction(l)
         stacklistmodel.objects.create(users=users, stack=str(key),parentid=3,value=(value/100.0),colors=colors)
-    userprof = profile.objects.get(users=request.user)
+    #userprof = profile.objects.get(users=request.user)
 
 
     return context_dict, jsonstacklist
@@ -271,6 +291,15 @@ def codecademy(context_dict, request, jsonstacklist, users):
         stacklistmodel.objects.create(users=users, stack=l,parentid=2,value=10,colors=colors)
     return context_dict, jsonstacklist
 
+def personalprofil(request, jsonstacklist, users):
+    personalprof = personalprofile.objects.get(users=users)
+    stacklis = [personalprof.stack1, personalprof.stack2, personalprof.stack3, personalprof.stack4]
+    pointlis = [personalprof.point1, personalprof.point2, personalprof.point3, personalprof.point4]
+    for i in range(4):
+        colors = colorsfunction(stacklis[i])
+        stacklistmodel.objects.create(users=users, stack=stacklis[i], parentid=5, value=pointlis[i]*10, colors=colors)
+
+
 def treemapsforallprofile(jsonstacklist,request, users):
     #userskey = User.objects.get(username=request.user)
     stackobjects = stacklistmodel.objects.filter(users=users)
@@ -290,6 +319,8 @@ def treemapsforallprofile(jsonstacklist,request, users):
 def userprofile(request, userid):
     context = RequestContext(request)
     context_dict = {}
+    users = User.objects.get(id=userid)
+    personalprofi = personalprofile.objects.get(users=users)
     jsonstacklist = []
     jsonstacklist.append({
                 "id": "1",
@@ -311,7 +342,11 @@ def userprofile(request, userid):
                 "text": "Codewars",
                 "parentid": "-1"
             })
-
+    jsonstacklist.append({
+                "id": "5",
+                "text": personalprofi.workex,
+                "parentid": "-1"
+            })
     users = User.objects.get(id=userid)
     prof = stacklistmodel.objects.filter(users=users)
 
@@ -320,6 +355,7 @@ def userprofile(request, userid):
         context_dict, jsonstacklist = codecademy(context_dict,request, jsonstacklist, users)
         context_dict, jsonstacklist = teamtreehouse(context_dict,request, jsonstacklist, users)
         context_dict, jsonstacklist = codewars(context_dict,request, jsonstacklist, users)
+        personalprofil(request, jsonstacklist, users)
 
     jsonstacklist = treemapsforallprofile(jsonstacklist,request, users)
     jsonstacklist = json.dumps(jsonstacklist)
@@ -331,13 +367,16 @@ def userprofile(request, userid):
         codecademylist = CodeCademymodel.objects.filter(users=users)
         treehouselist = TeamTreeHousemodel.objects.filter(users=users)
         codewarslist = Codewarsmodel.objects.filter(users=users)
+        personalprofilelist = personalprofile.objects.filter(users=users)
         context_dict['githublist'] = githublist
         context_dict['codecademylist'] = codecademylist
         context_dict['treehouselist'] = treehouselist
         context_dict['codewarslist'] = codewarslist
+        context_dict['personalprofilelist'] = personalprofilelist
     except:
         pass
-
+    profile_list = UserProfile.objects.all()
+    context_dict['profile_list'] = profile_list
     return render_to_response('studentracker/userprofile.html', context_dict, context)
 
 

@@ -1,10 +1,11 @@
 {% extends 'studentracker/base.html' %}
 {% block body_block %}
     <br><br><br><br>
+{#    {{ jsonstacklist }}#}
     <div class="container">
         <div class="row">
             <div id="treemap"></div><br>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div><b>Github-Repo names</b></div>
                 <div>{% for key in githublist %}
                         <b>{% ifchanged %}<br><br>{{key.reponame}}{% endifchanged %}</b><br>
@@ -13,7 +14,7 @@
                         <br>
                 </div><br>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div><b>codecademy-courses completed</b></div><br>
                 <div>{% for link in codecademylist %}
                         {{ forloop.counter }} .
@@ -21,7 +22,7 @@
                     {% endfor %}<br>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div><b>Team Tree House</b></div><br>
                 <div>{% for link in treehouselist %}
                         {{ forloop.counter }} .
@@ -30,7 +31,7 @@
                 </div>
                 <br>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div><b>Code-Wars</b></div><br>
                 <div>{% for link in codewarslist %}
                     {{ forloop.counter }}
@@ -40,6 +41,18 @@
                     Completed challenges - {{ link.completedchallenges }}
                     {% endfor %}<br>
                 </div>
+            </div>
+            <div class="col-md-4">
+                <div><b>Work-exp</b></div><br>
+                <div>{% for link in personalprofilelist %}
+                        <div>Profile : {{ link.workex }}</div>
+                        <div>{{ link.stack1 }} : {{ link.point1 }} yrs</div>
+                        <div>{{ link.stack2 }} : {{ link.point2 }} yrs</div>
+                        <div>{{ link.stack3 }} : {{ link.point3 }} yrs</div>
+                        <div>{{ link.stack4 }} : {{ link.point4 }} yrs</div>
+                {% endfor %}<br>
+                </div>
+                <br>
             </div>
         </div>
         </div>

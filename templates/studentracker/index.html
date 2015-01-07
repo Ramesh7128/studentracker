@@ -1,41 +1,46 @@
 {% extends 'studentracker/base.html' %}
 {% block body_block %}
-{#        <img width="100%" class="cont" src="{{STATIC_URL}}/stud.png">#}
-        <div class="container">
+{#        <style>#}
+{#            .col-md-3 > .backgroun  {#}
+{#                padding: 15px;#}
+{#                background: #19A319;#}
+{#                border-radius: 15px;#}
+{#                height: 550px;#}
+{#            }#}
 
-{#            <img class="img-responsive center-block" src="{{STATIC_URL}}/office1.jpg">#}
-
-            <div class="row">
-                <div class="col-md-8">
-                <img width="100%" height="100%" class="img-responsive center-block" src="{{STATIC_URL}}/office1.jpg">
-                </div>
-{#            <form class="form-horizontal" method="post" action="/">#}
-{#                {% csrf_token %}#}
-{#                <input type="text" name="username" placeholder="username" value="" size="50" />#}
-{#                <input class="btn btn-primary" type="submit" value="submit" />#}
-{#            </form>#}
-
-            <div class="col-md-4">
-                <div class="container">
-                    <div class="row">
-                        {% for prof in profile_list %}
-                            <div class="col-md-2">
-                                <a href="/prof/{{prof.user.id}}"><img height="50px" width="50px" src="{{ MEDIA_URL }}/{{prof.picture}}">
-                                <p><b>User: </b>{{prof.user.username}}</p>
-                            </div>
-
+     {#   </style>#}
+{#        <br><br><br>#}
+{#        <img width="100%" class="cont" src="{{STATIC_URL}}/s{#tud.png">#}
+{#        <div class="contai{#ner-fluid">#}
+{##}
+{#            <img class="img-responsive center-block" src="{{STATIC_URL}}/offi{#c{#e1.jpg">#}
+{##}
+{#            <div c{#lass="row">#}
+{#                <div class={#"col-md-3">#}
+         {#       <br>#}
+{#                <div class="{#backgroun">#}
+{#                {% for prof in prof{#ile_list %}#}
+{#                    <div class={#"col-md-6">#}
+{#                    <a href="/prof/{{prof.user.id}}"><img height="50px" width="50px" src="{{ MEDIA_URL }}/{{prof.pict{#ure}}"></a>#}
+{#                    <p><b>User: </b>{{prof.user.use{#rname}}</p>#}
+{#                    </div>#}
+{##}
 {#                    {% ifequal off.users used %}#}
 {#                    <form method="post" action="/">#}
 {#                        {% csrf_token %}#}
 {#                        <input type="hidden" name="title" value="{{off.id}}">#}
 {#                        <input class="btn btn-danger" type="submit" name="del" value="del">#}
 {#                    </form>#}
-{#                    {% endifequal %}#}
+{#                    {% endi{#fequal %}#}
+{#                #}{#% endfor %}#}
+{#          #} {#     </div>#}
+{#          #} {#     </div>#}
+{#                <div class="col-md-9">#}
+                <img width="100%" height="550px" class="cont" src="{{STATIC_URL}}/anime.gif">
+{#            <form class="form-horizontal" method="post" action="/">#}
+{#                {% csrf_token %}#}
+{#                <input type="text" name="username" placeholder="username" value="" size="50" />#}
+{#                <input class="btn btn-primary" type="submit" value="submit" />#}
+{#            </form>#}
 
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
 {% endblock %}
