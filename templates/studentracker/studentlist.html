@@ -1,9 +1,9 @@
-<ul class="nav nav-list">
+<ul>
     {% if profile_list %}
         {% for pro in profile_list %}
-            <li><a href="/prof/{{prof.user.id}}">{{ pro.user.username }}</a></li>
+            <li><a href="/prof/{{ pro.user.id }}" style="color: #FFFFFF">{{ pro.user.username }}</a></li>
         {% endfor %}
     {% else %}
-        <li>No categories found</li>
+        <li>No students found</li>
     {% endif %}
 </ul>

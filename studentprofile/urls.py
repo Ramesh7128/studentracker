@@ -6,5 +6,6 @@ urlpatterns = patterns('',
         url(r'^user/', include('oautherise.urls')),
         url(r'^addlinks/', views.addlinks, name='addlinks'),
         url(r'^userprofile/(?P<userid>\w+)/$', views.userprofile, name='userprofile'),
+        url(r'profile/studentlist/$', views.studentlist, name='studentlist'),
         url(r'prof/(?P<userid>\w+)/$', views.userprofile, name='profile'),
         )
